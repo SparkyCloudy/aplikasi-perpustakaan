@@ -9,14 +9,19 @@ public class UI extends Form {
             System.out.print("Pilihan: ");
 
             String choice = input.nextLine();
-            switch (Integer.parseInt(choice)) {
-                case 1 -> initRegister();
-                case 2 -> initChecker("nim");
-                case 3 -> {
-                    return;
+            if (check.isNumber(choice)) {
+                switch (Integer.parseInt(choice)) {
+                    case 1 -> initRegister();
+                    case 2 -> initChecker("nim");
+                    case 3 -> {
+                        return;
+                    }
+                    default -> System.out.println("Pilihan yang dimasukan salah!");
                 }
-                default -> System.out.println("Pilihan yang dimasukan salah!");
+            } else {
+                System.out.println("Pilihan yang dimasukan salah!");
             }
+
         }
     }
 }
