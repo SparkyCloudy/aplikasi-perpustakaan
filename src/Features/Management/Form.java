@@ -78,7 +78,7 @@ class Form {
             if (nim.equalsIgnoreCase("kembali")) {
                 // Back to UI home menu
                 return;
-            } else if (isNumber) {
+            } else if (nim.length() == 10 && isNumber) {
                 // Add input to JsonObject
                 obj.addProperty("nim", Long.valueOf(nim));
 
@@ -86,7 +86,7 @@ class Form {
                 break;
             } else {
                 // Tell user if their input incorrect
-                System.out.println("Input NIM salah, Harus berupa angka tanpa spasi!.");
+                System.out.println("Input NIM salah, Harus berupa 10 digit angka tanpa spasi!.");
             }
         }
 
