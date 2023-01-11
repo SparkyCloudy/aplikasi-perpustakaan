@@ -12,7 +12,7 @@ class Form {
 
     // JSON database location
     static Dotenv env = Dotenv.load();
-    final static String filepath = env.get("FILEPATH");
+    final static String filepath = env.get("USERJSON");
 
     /**
      * Initialize Register Form
@@ -34,16 +34,19 @@ class Form {
             if (name.equalsIgnoreCase("kembali")) {
                 // Back to UI home menu
                 return;
-            } else if (isString) {
-                // Add input to JsonObject
-                obj.addProperty("name", name);
+            }
 
-                // Input has been added, then we stop the loop
-                break;
-            } else {
+            if (!isString) {
                 // Tell user if their input incorrect
                 System.out.println("Input nama salah, Harus berupa huruf!.");
+                continue;
             }
+
+            // Add input to JsonObject
+            obj.addProperty("name", name);
+
+            // Input has been added, then we stop the loop
+            break;
         }
 
         // Keep repeat until the input correct
@@ -61,16 +64,17 @@ class Form {
             }
 
             boolean isNumber = check.isNumber(phone);
-            if (isNumber) {
-                // Add input to JsonObject
-                obj.addProperty("phone", Long.valueOf(phone));
-
-                // Input has been added, then we stop the loop
-                break;
-            } else {
+            if (!isNumber) {
                 // Tell user if their input incorrect
                 System.out.println("Input Nomer Telpon salah, Harus berupa angka tanpa spasi!.");
+                continue;
             }
+
+            // Add input to JsonObject
+            obj.addProperty("phone", Long.valueOf(phone));
+
+            // Input has been added, then we stop the loop
+            break;
         }
 
         // Keep repeat until the input correct
@@ -86,16 +90,19 @@ class Form {
             if (nim.equalsIgnoreCase("kembali")) {
                 // Back to UI home menu
                 return;
-            } else if (nim.length() == 10 && isNumber) {
-                // Add input to JsonObject
-                obj.addProperty("nim", Long.valueOf(nim));
+            }
 
-                // Input has been added, then we stop the loop
-                break;
-            } else {
+            if (nim.length() != 10 && !isNumber) {
                 // Tell user if their input incorrect
                 System.out.println("Input NIM salah, Harus berupa 10 digit angka tanpa spasi!.");
+                continue;
             }
+
+            // Add input to JsonObject
+            obj.addProperty("nim", Long.valueOf(nim));
+
+            // Input has been added, then we stop the loop
+            break;
         }
 
         // Add an object into a list
@@ -125,23 +132,23 @@ class Form {
             // Check what JSON Element what we want to check
             if (isNumber && length == 10) {
                 // Check if user input exist on JSON file
-                if (check.elementIsValid(value, list, "nim")) {
-                    System.out.println("Found!");
-                } else {
+                if (!check.elementIsValid(value, list, "nim")) {
                     System.out.println("Not Found!");
+                    continue;
                 }
+                System.out.println("NIM Found!");
             } else if (isNumber) {
-                if (check.elementIsValid(value, list, "phone")) {
-                    System.out.println("Found!");
-                } else {
+                if (!check.elementIsValid(value, list, "phone")) {
                     System.out.println("Not Found!");
+                    continue;
                 }
+                System.out.println("Phone Found!");
             } else if (isString) {
-                if (check.elementIsValid(value, list, "name")) {
-                    System.out.println("Found!");
-                } else {
+                if (!check.elementIsValid(value, list, "name")) {
                     System.out.println("Not Found!");
+                    continue;
                 }
+                System.out.println("Name Found!");
             } else {
                 // Tell user if their input incorrect
                 System.out.println("Input NIM salah, Harus berupa angka tanpa spasi!.");
