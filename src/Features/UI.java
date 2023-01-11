@@ -12,7 +12,7 @@ public class UI extends Form {
             if (check.isNumber(choice)) {
                 switch (Integer.parseInt(choice)) {
                     case 1 -> initRegister();
-                    case 2 -> initChecker("nim");
+                    case 2 -> initChecker();
                     case 3 -> {
                         return;
                     }
