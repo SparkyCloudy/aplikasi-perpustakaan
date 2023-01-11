@@ -44,6 +44,9 @@ class Form {
 
                     // Stop last menu to let new menu run
                     return;
+                } else {
+                    System.out.println("Kombinasi tidak ditemukan!");
+                    continue;
                 }
             }
 
@@ -83,6 +86,9 @@ class Form {
 
                     // Stop last menu to let new menu run
                     return;
+                } else {
+                    System.out.println("Kombinasi tidak ditemukan!");
+                    continue;
                 }
             }
 
@@ -123,6 +129,9 @@ class Form {
 
                     // Stop last menu to let new menu run
                     return;
+                } else {
+                    System.out.println("Kombinasi tidak ditemukan!");
+                    continue;
                 }
             }
 
@@ -172,6 +181,9 @@ class Form {
 
                     // Stop last menu to let new menu run
                     return;
+                } else {
+                    System.out.println("Kombinasi tidak ditemukan!");
+                    continue;
                 }
             }
 
