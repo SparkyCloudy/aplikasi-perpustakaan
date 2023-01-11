@@ -23,19 +23,31 @@ class Form {
 
         // Keep repeat until the input correct
         while (true) {
-            System.out.println("Masukan Nama Lengkap dari Mahasiswa/i atau \"Kembali\" ke menu Utama");
+            System.out.println("Masukan Nama Lengkap dari Mahasiswa/i.");
+            System.out.println("Back: ^B");
+            System.out.println("Cancel: ^C");
             System.out.print(">> ");
 
             // Initialize Variables
-            String name = input.nextLine();
+            String value = input.nextLine();
 
             // Check if the input is correct
-            boolean isString = check.isString(name);
-            if (name.equalsIgnoreCase("kembali")) {
-                // Back to UI home menu
-                return;
+            var length = value.length();
+            if (value.startsWith("^") && length == 2) {
+                if (value.contains("B")) {
+                    // Back to last menu
+                    return;
+                }
+
+                if (value.contains("C")) {
+                    initRegister();
+
+                    // Stop last menu to let new menu run
+                    return;
+                }
             }
 
+            var isString = check.isString(value);
             if (!isString) {
                 // Tell user if their input incorrect
                 System.out.println("Input nama salah, Harus berupa huruf!.");
@@ -43,7 +55,7 @@ class Form {
             }
 
             // Add input to JsonObject
-            obj.addProperty("name", name);
+            obj.addProperty("name", value);
 
             // Input has been added, then we stop the loop
             break;
@@ -51,19 +63,30 @@ class Form {
 
         // Keep repeat until the input correct
         while (true) {
-            System.out.println("Masukan Nomer Telpon dari Mahasiswa/i atau \"Kembali\" ke menu Utama");
+            System.out.println("Masukan Nomer Telpon dari Mahasiswa/i.");
+            System.out.println("Back: ^B");
+            System.out.println("Cancel: ^C");
             System.out.print(">> ");
 
             // Initialize Variables
-            String phone = input.nextLine();
+            String value = input.nextLine();
 
-            // Check if the input is correct
-            if (phone.equalsIgnoreCase("kembali")) {
-                // Back to UI home menu
-                return;
+            var length = value.length();
+            if (value.startsWith("^") && length == 2) {
+                if (value.contains("B")) {
+                    // Back to last menu
+                    return;
+                }
+
+                if (value.contains("C")) {
+                    initRegister();
+
+                    // Stop last menu to let new menu run
+                    return;
+                }
             }
 
-            boolean isNumber = check.isNumber(phone);
+            var isNumber = check.isNumber(value);
             if (!isNumber) {
                 // Tell user if their input incorrect
                 System.out.println("Input Nomer Telpon salah, Harus berupa angka tanpa spasi!.");
@@ -71,7 +94,7 @@ class Form {
             }
 
             // Add input to JsonObject
-            obj.addProperty("phone", Long.valueOf(phone));
+            obj.addProperty("phone", Long.valueOf(value));
 
             // Input has been added, then we stop the loop
             break;
@@ -79,27 +102,39 @@ class Form {
 
         // Keep repeat until the input correct
         while (true) {
-            System.out.println("Masukan NIM dari Mahasiswa/i atau \"Kembali\" ke menu Utama");
+            System.out.println("Masukan NIM dari Mahasiswa/i.");
+            System.out.println("Back: ^B");
+            System.out.println("Cancel: ^C");
             System.out.print(">> ");
 
             // Initialize Variables
-            String nim = input.nextLine();
+            String value = input.nextLine();
 
             // Check if the input is correct
-            boolean isNumber = check.isNumber(nim);
-            if (nim.equalsIgnoreCase("kembali")) {
-                // Back to UI home menu
-                return;
+            var length = value.length();
+            if (value.startsWith("^") && length == 2) {
+                if (value.contains("B")) {
+                    // Back to last menu
+                    return;
+                }
+
+                if (value.contains("C")) {
+                    initRegister();
+
+                    // Stop last menu to let new menu run
+                    return;
+                }
             }
 
-            if (nim.length() != 10 && !isNumber) {
+            var isNumber = check.isNumber(value);
+            if (!isNumber || length != 10) {
                 // Tell user if their input incorrect
                 System.out.println("Input NIM salah, Harus berupa 10 digit angka tanpa spasi!.");
                 continue;
             }
 
             // Add input to JsonObject
-            obj.addProperty("nim", Long.valueOf(nim));
+            obj.addProperty("nim", Long.valueOf(value));
 
             // Input has been added, then we stop the loop
             break;
@@ -114,19 +149,30 @@ class Form {
 
     public static void initChecker() {
         while (true) {
-            System.out.println("Masukan NIM dari Mahasiswa/i yang ingin dicari atau \"Kembali\" ke menu Utama");
+            System.out.println("Masukan data dari Mahasiswa/i yang ingin dicari.");
+            System.out.println("Back: ^B");
+            System.out.println("Cancel: ^C");
             System.out.print(">> ");
 
-            String value = input.nextLine();
+            var value = input.nextLine();
 
             // Check if the input is correct
             var list = check.getUserList(filepath);
             var length = value.length();
-            boolean isNumber = check.isNumber(value);
-            boolean isString = check.isString(value);
-            if (value.equalsIgnoreCase("kembali")) {
-                // Back to UI main menu
-                return;
+            var isNumber = check.isNumber(value);
+            var isString = check.isString(value);
+            if (value.startsWith("^") && length == 2) {
+                if (value.contains("B")) {
+                    // Back to last menu
+                    return;
+                }
+
+                if (value.contains("C")) {
+                    initRegister();
+
+                    // Stop last menu to let new menu run
+                    return;
+                }
             }
 
             // Check what JSON Element what we want to check
