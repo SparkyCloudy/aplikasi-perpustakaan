@@ -78,7 +78,7 @@ public class Checker {
     /**
      * Method to checking if input/scanner has the correct data.
      * @param str   string that will be checked by the method
-     * @return      true if data input is not digit, false otherwise
+     * @return      true if data input has value and is not digit, false otherwise
      */
     public boolean isString(String str) {
         for (char c: str.toCharArray()) {
@@ -89,13 +89,13 @@ public class Checker {
         }
 
         // Otherwise
-        return true;
+        return !str.isEmpty();
     }
 
     /**
      * Method to checking if input/scanner has the number (integer/float) data.
      * @param str   string that will be checked by the method
-     * @return      true if data input is a int/float without whitespace, false otherwise
+     * @return      true if data input has a int/float value without whitespace, false otherwise
      */
     public boolean isNumber(String str) {
         for (char c : str.toCharArray()) {
@@ -111,7 +111,7 @@ public class Checker {
         }
 
         // Otherwise
-        return true;
+        return !str.isEmpty();
     }
 
     /**
