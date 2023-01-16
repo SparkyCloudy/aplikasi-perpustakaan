@@ -5,7 +5,7 @@ import java.io.*;
 
 public class Checker {
     // Initialize GSon with pretty printing
-    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     // Create a JsonArray
     private JsonArray userList = new JsonArray();
@@ -122,21 +122,33 @@ public class Checker {
      * @param file      Json File to be used store data.
      * @return          JsonArray value.
      */
-    public JsonArray getUserList(String file) {
+    public JsonArray getDatabaseList(String file) {
         try (var reader = new FileReader(file)) {
             // Check if the file have a existing data inside
-            if (!reader.ready()) {
-                // If not found, tell user File is Empty
-                System.out.println("File is Empty");
-
-                return null;
+            if (reader.ready()) {
+               // Get the list
+                return userList = gson.fromJson(reader, JsonArray.class);
             }
-            return userList = gson.fromJson(reader, JsonArray.class);
 
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.printf("File %s is Empty %n", file);
         }
 
         return null;
     }
+
+    // Not yet finished
+    public String[] getJsonArrayString(String file) {
+        gson = new Gson();
+        try (var reader = new FileReader(file)) {
+            // Add list to the file
+            return gson.fromJson(reader, String[].class);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
+
