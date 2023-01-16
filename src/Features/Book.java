@@ -280,8 +280,13 @@ class Book {
 
             var isNumber = check.isNumber(value);
             if (isNumber) {
+                // Get JSON Element on x index
                 var element = list.get(Integer.parseInt(value) - 1);
+
+                // Get JSON Property value and parse it as String
                 value = element.getAsJsonObject().get("bookName").getAsString();
+
+                // Add the string into the JsonArray
                 jArray.add(value);
                 continue;
             }
