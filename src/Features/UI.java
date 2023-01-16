@@ -26,8 +26,8 @@ public class UI {
             }
 
             switch (Integer.parseInt(choice)) {
-                case 1 -> menuMahasiswa();
-                case 2 -> menuBuku();
+                case 1 -> studentMenu();
+                case 2 -> bookMenu();
                 case 3 -> {
                     return;
                 }
@@ -36,10 +36,10 @@ public class UI {
         }
     }
 
-    private void menuMahasiswa() {
+    private void studentMenu() {
         while (true) {
             System.out.println("1. Register Mahasiswa");
-            System.out.println("2. Check NIM Mahasiswa");
+            System.out.println("2. Check Data Mahasiswa");
             System.out.println("3. Kembali");
             System.out.print("Pilihan: ");
 
@@ -60,7 +60,7 @@ public class UI {
         }
     }
 
-    private void menuBuku() {
+    private void bookMenu() {
         while (true) {
             System.out.println("1. Donasi Buku");
             System.out.println("2. Pinjam Buku");
