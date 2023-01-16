@@ -12,7 +12,7 @@ class Form {
 
     // JSON database location
     static Dotenv env = Dotenv.load();
-    final static String filepath = env.get("USERJSON");
+    final static String userpath = env.get("USERJSON");
 
     /**
      * Initialize Register Form
@@ -125,9 +125,8 @@ class Form {
                 }
 
                 if (value.contains("C")) {
-                    initRegister();
-
                     // Stop last menu to let new menu run
+                    initRegister();
                     return;
                 } else {
                     System.out.println("Kombinasi tidak ditemukan!");
@@ -150,36 +149,28 @@ class Form {
         }
 
         // Add an object into a list
-        var list = check.addObjectToFile(obj, filepath);
+        var list = check.addObjectToList(obj, userpath);
 
         // Write the list to the JSON file
-        check.writeListToFile(list, filepath);
+        check.writeListToFile(list, userpath);
     }
 
     public static void initChecker() {
         while (true) {
             System.out.println("Masukan data dari Mahasiswa/i yang ingin dicari.");
             System.out.println("Back: ^B");
-            System.out.println("Cancel: ^C");
             System.out.print(">> ");
 
             var value = input.nextLine();
 
             // Check if the input is correct
-            var list = check.getUserList(filepath);
+            var list = check.getDatabaseList(userpath);
             var length = value.length();
             var isNumber = check.isNumber(value);
             var isString = check.isString(value);
             if (value.startsWith("^") && length == 2) {
                 if (value.contains("B")) {
                     // Back to last menu
-                    return;
-                }
-
-                if (value.contains("C")) {
-                    initRegister();
-
-                    // Stop last menu to let new menu run
                     return;
                 } else {
                     System.out.println("Kombinasi tidak ditemukan!");
