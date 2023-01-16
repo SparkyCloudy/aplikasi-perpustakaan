@@ -16,12 +16,15 @@ public class Checker {
      * @param file      Json File to be used store data.
      * @return          JsonArray value.
      */
-    public JsonArray addObjectToFile(JsonObject object, String file) {
+    public JsonArray addObjectToList(JsonObject object, String file) {
         try (var reader = new FileReader(file)){
             // Check if the file have a existing data inside
             if (reader.ready()) {
                 // If found, then read the file and put to the userList var
                 userList = gson.fromJson(reader, JsonArray.class);
+            } else {
+                // If not found, then re-instantiate the object
+                userList = new JsonArray();
             }
         } catch (IOException e) {
             e.printStackTrace();
