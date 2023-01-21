@@ -8,12 +8,14 @@ public class UI {
     Scanner input = new Scanner(System.in);
     public static void initUI() {
         var menu = new UI();
+        check.clearConsole();
         menu.initMainMenu();
     }
 
 
     private void initMainMenu() {
         while (true) {
+            check.clearConsole();
             System.out.println("1. Menu Mahasiswa");
             System.out.println("2. Menu Buku");
             System.out.println("3. Exit Program");
@@ -31,13 +33,17 @@ public class UI {
                 case 3 -> {
                     return;
                 }
-                default -> System.out.println("Pilihan yang dimasukan salah!");
+                default -> {
+                    System.out.println("Pilihan yang dimasukan salah!");
+                    check.clearConsole(3);
+                }
             }
         }
     }
 
     private void studentMenu() {
         while (true) {
+            check.clearConsole();
             System.out.println("1. Register Mahasiswa");
             System.out.println("2. Check Data Mahasiswa");
             System.out.println("3. Kembali");
@@ -46,6 +52,7 @@ public class UI {
             String choice = input.nextLine();
             if (!check.isNumber(choice)) {
                 System.out.println("Harus berupa angka dan tidak boleh kosong!");
+                check.clearConsole(3);
                 continue;
             }
 
@@ -55,13 +62,17 @@ public class UI {
                 case 3 -> {
                     return;
                 }
-                default -> System.out.println("Pilihan yang dimasukan salah!");
+                default -> {
+                    System.out.println("Pilihan yang dimasukan salah!");
+                    check.clearConsole(3);
+                }
             }
         }
     }
 
     private void bookMenu() {
         while (true) {
+            check.clearConsole();
             System.out.println("1. Donasi Buku");
             System.out.println("2. Pinjam Buku");
             System.out.println("3. Cari Buku");
@@ -71,6 +82,7 @@ public class UI {
             String choice = input.nextLine();
             if (!check.isNumber(choice)) {
                 System.out.println("Harus berupa angka dan tidak boleh kosong!");
+                check.clearConsole(3);
                 continue;
             }
             switch (Integer.parseInt(choice)) {
@@ -80,7 +92,10 @@ public class UI {
                 case 4 -> {
                     return;
                 }
-                default -> System.out.println("Pilihan yang dimasukan salah!");
+                default -> {
+                    System.out.println("Pilihan yang dimasukan salah!");
+                    check.clearConsole(3);
+                }
             }
         }
     }

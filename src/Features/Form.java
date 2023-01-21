@@ -23,6 +23,7 @@ class Form {
 
         // Keep repeat until the input correct
         while (true) {
+            check.clearConsole();
             System.out.println("Masukan Nama Lengkap dari Mahasiswa/i.");
             System.out.println("Back: ^B");
             System.out.println("Cancel: ^C");
@@ -46,6 +47,7 @@ class Form {
                     return;
                 } else {
                     System.out.println("Kombinasi tidak ditemukan!");
+                    check.clearConsole(3);
                     continue;
                 }
             }
@@ -54,6 +56,7 @@ class Form {
             if (!isString) {
                 // Tell user if their input incorrect
                 System.out.println("Input nama salah, Harus berupa huruf!.");
+                check.clearConsole(3);
                 continue;
             }
 
@@ -66,6 +69,7 @@ class Form {
 
         // Keep repeat until the input correct
         while (true) {
+            check.clearConsole();
             System.out.println("Masukan Nomer Telpon dari Mahasiswa/i.");
             System.out.println("Back: ^B");
             System.out.println("Cancel: ^C");
@@ -88,6 +92,7 @@ class Form {
                     return;
                 } else {
                     System.out.println("Kombinasi tidak ditemukan!");
+                    check.clearConsole(3);
                     continue;
                 }
             }
@@ -96,6 +101,7 @@ class Form {
             if (!isNumber) {
                 // Tell user if their input incorrect
                 System.out.println("Input Nomer Telpon salah, Harus berupa angka tanpa spasi!.");
+                check.clearConsole(3);
                 continue;
             }
 
@@ -108,6 +114,7 @@ class Form {
 
         // Keep repeat until the input correct
         while (true) {
+            check.clearConsole();
             System.out.println("Masukan NIM dari Mahasiswa/i.");
             System.out.println("Back: ^B");
             System.out.println("Cancel: ^C");
@@ -130,6 +137,7 @@ class Form {
                     return;
                 } else {
                     System.out.println("Kombinasi tidak ditemukan!");
+                    check.clearConsole(3);
                     continue;
                 }
             }
@@ -138,6 +146,7 @@ class Form {
             if (!isNumber || length != 10) {
                 // Tell user if their input incorrect
                 System.out.println("Input NIM salah, Harus berupa 10 digit angka tanpa spasi!.");
+                check.clearConsole(3);
                 continue;
             }
 
@@ -157,6 +166,7 @@ class Form {
 
     public static void initChecker() {
         while (true) {
+            check.clearConsole();
             System.out.println("Masukan data dari Mahasiswa/i yang ingin dicari.");
             System.out.println("Back: ^B");
             System.out.print(">> ");
@@ -174,6 +184,7 @@ class Form {
                     return;
                 } else {
                     System.out.println("Kombinasi tidak ditemukan!");
+                    check.clearConsole(3);
                     continue;
                 }
             }
@@ -183,24 +194,31 @@ class Form {
                 // Check if user input exist on JSON file
                 if (!check.elementIsValid(value, list, "nim")) {
                     System.out.println("Not Found!");
+                    check.clearConsole(1);
                     continue;
                 }
                 System.out.println("NIM Found!");
+                check.clearConsole(1);
             } else if (isNumber) {
                 if (!check.elementIsValid(value, list, "phone")) {
                     System.out.println("Not Found!");
+                    check.clearConsole(1);
                     continue;
                 }
                 System.out.println("Phone Found!");
+                check.clearConsole(1);
             } else if (isString) {
                 if (!check.elementIsValid(value, list, "name")) {
                     System.out.println("Not Found!");
+                    check.clearConsole(1);
                     continue;
                 }
                 System.out.println("Name Found!");
+                check.clearConsole(1);
             } else {
                 // Tell user if their input incorrect
                 System.out.println("Input NIM salah, Harus berupa angka tanpa spasi!.");
+                check.clearConsole(3);
             }
         }
     }
