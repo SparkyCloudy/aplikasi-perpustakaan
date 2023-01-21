@@ -64,6 +64,11 @@ public class Checker {
      * @return          true if data found
      */
     public boolean elementIsValid(String search, JsonArray list, String data) {
+        // Check if list empty/null
+        if (list == null) {
+            return false;
+        }
+
         for (int i = 0; i < list.size(); i++) {
             var element = list.get(i);
             String value = element.getAsJsonObject().get(data).getAsString();
@@ -138,12 +143,16 @@ public class Checker {
         return null;
     }
 
+    public void removeBookList() {
+
+    }
+
     // Not yet finished
-    public String[] getJsonArrayString(String file) {
+    public String getJsonArrayString(String file) {
         gson = new Gson();
         try (var reader = new FileReader(file)) {
             // Add list to the file
-            return gson.fromJson(reader, String[].class);
+            return gson.fromJson(reader, String.class);
 
         } catch (IOException e) {
             e.printStackTrace();
