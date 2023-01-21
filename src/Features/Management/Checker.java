@@ -2,6 +2,7 @@ package Features.Management;
 
 import com.google.gson.*;
 import java.io.*;
+import java.util.Scanner;
 
 public class Checker {
     // Initialize GSon with pretty printing
@@ -141,6 +142,24 @@ public class Checker {
         }
 
         return null;
+    }
+
+    public void clearConsole() {
+        try {
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void clearConsole(double delay) {
+        try {
+            delay *= 1000;
+            Thread.sleep((long)delay);
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void removeBookList() {
