@@ -1,3 +1,4 @@
+//utility yang
 package Features.Management;
 
 import com.google.gson.*;
@@ -5,6 +6,7 @@ import java.io.*;
 
 public class Checker {
     // Initialize GSon with pretty printing
+    //bikin object dari gson untuk memanipulasi file json
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     // Create a JsonArray
@@ -17,20 +19,25 @@ public class Checker {
      * @return          JsonArray value.
      */
     public JsonArray addObjectToList(JsonObject object, String file) {
+        //
         try (var reader = new FileReader(file)){
             // Check if the file have a existing data inside
             if (reader.ready()) {
                 // If found, then read the file and put to the userList var
+                //ngerubah file dari reader ke kelas yang dituju
                 userList = gson.fromJson(reader, JsonArray.class);
             } else {
                 // If not found, then re-instantiate the object
+                //bikin arrays baru
                 userList = new JsonArray();
             }
         } catch (IOException e) {
+            //buat ngethrow error klok ada masalah di file reader (yang ada diatas)
             e.printStackTrace();
         }
 
         // Add back
+        // sudah berupa interface (sudah berupa object) yang akan diisi method yang dituju
         userList.add(object);
 
         return userList;
@@ -63,6 +70,7 @@ public class Checker {
      * @param data      Json Element we want to get
      * @return          true if data found
      */
+    //buat ngecek value dari sebuah objek sama dengan yang ada di database
     public boolean elementIsValid(String search, JsonArray list, String data) {
         // Check if list empty/null
         if (list == null) {
@@ -112,10 +120,6 @@ public class Checker {
                 return false;
             }
 
-            // Stop if we found whitespace on the string
-            if (Character.isWhitespace(c)) {
-                return false;
-            }
         }
 
         // Otherwise
