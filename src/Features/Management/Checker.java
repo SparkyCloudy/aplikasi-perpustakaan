@@ -2,7 +2,6 @@ package Features.Management;
 
 import com.google.gson.*;
 import java.io.*;
-import java.util.Scanner;
 
 public class Checker {
     // Initialize GSon with pretty printing
