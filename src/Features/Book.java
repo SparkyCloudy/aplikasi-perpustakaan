@@ -37,6 +37,7 @@ class Book {
         // If User input whitespace (ENTER only) then repeat it
         if (value.isEmpty()) {
             System.out.println("Input tidak boleh kosong!");
+            check.clearConsole(3);
             initDonation();
 
             // Stop last menu to let new menu run
@@ -91,6 +92,7 @@ class Book {
                     return;
                 } else {
                     System.out.println("Kombinasi tidak ditemukan!");
+                    check.clearConsole(3);
                     continue;
                 }
             }
@@ -98,6 +100,7 @@ class Book {
             boolean isString = check.isString(value);
             if (!isString) {
                 System.out.println("Input Nama Donatur salah, Harus berupa huruf!.");
+                check.clearConsole(3);
                 continue;
             }
 
@@ -131,6 +134,7 @@ class Book {
                     return;
                 } else {
                     System.out.println("Kombinasi tidak ditemukan!");
+                    check.clearConsole(3);
                     continue;
                 }
             }
@@ -138,6 +142,7 @@ class Book {
             boolean isNumber = check.isNumber(value);
             if (!isNumber) {
                 System.out.println("Input jumlah buku salah, Harus berupa nilai angka tanpa spasi!.");
+                check.clearConsole(3);
                 continue;
             }
 
@@ -154,7 +159,7 @@ class Book {
             check.clearConsole();
             System.out.println("[KONFIRMASI] Apakah detail buku dibawah sudah tepat?");
             System.out.println("Nama Buku\t : " + temp.get(0));
-            System.out.println("Nama Donatur : " + temp.get(1));
+            System.out.println("Nama Donatur\t : " + temp.get(1));
             System.out.println("Jumlah Buku\t : " + temp.get(2));
             System.out.print("Pilihan [Y/n]: ");
 
@@ -163,11 +168,13 @@ class Book {
             // Default answear, Y or blank
             if (value.isBlank() || value.equalsIgnoreCase("y")) {
                 System.out.println("Buku berhasil ditambahkan ke Database!");
+                check.clearConsole(3);
                 break;
             }
 
             if (!value.equalsIgnoreCase("n")) {
                 System.out.println("Input konfirmasi salah, Input diantara [Y/N]!.");
+                check.clearConsole(3);
                 continue;
             }
 
@@ -343,7 +350,7 @@ class Book {
             var list = check.getDatabaseList(loanpath);
 
             if (list == null || list.isEmpty()) {
-                System.out.println("Database kosong, harap diisi terlebih dahulu menggunakan menu \"Donasi Buku\".");
+                System.out.println("Database kosong, harap diisi terlebih dahulu menggunakan menu \"Pinjam Buku\".");
                 check.clearConsole(3);
                 break;
             }
@@ -386,7 +393,7 @@ class Book {
             System.out.printf("List buku yang dipinjam oleh %s. %n", name);
             for (int i = 0; i < jArray.size(); i++) {
                 value = jArray.get(i).getAsString();
-                System.out.printf("%d. %s %n%n", (i+1), value);
+                System.out.printf("%d. %s %n", (i+1), value);
             }
             System.out.println();
         }
