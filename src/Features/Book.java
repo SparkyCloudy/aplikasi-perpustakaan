@@ -44,8 +44,7 @@ class Book {
             return;
         }
 
-        int length = value.length();
-        if (value.startsWith("^") && length == 2) {
+        if (value.startsWith("^") && value.length() == 2) {
             if (value.contains("B")) {
                 // Back to last menu
                 return;
@@ -77,8 +76,7 @@ class Book {
             value = input.nextLine();
 
             // Cancel and Back Buttons
-            length = value.length();
-            if (value.startsWith("^") && length == 2) {
+            if (value.startsWith("^") && value.length() == 2) {
                 // Back Button
                 if (value.contains("B")) {
                     // Back to last menu
@@ -121,8 +119,7 @@ class Book {
 
             value = input.nextLine();
 
-            length = value.length();
-            if (value.startsWith("^") && length == 2) {
+            if (value.startsWith("^") && value.length() == 2) {
                 if (value.contains("B")) {
                     // Back to last menu
                     return;
@@ -203,19 +200,16 @@ class Book {
         var obj = new JsonObject();
         var jArray = new JsonArray();
         var list = check.getDatabaseList(userpath);
-        int quantity = 0;
         String value;
         while (true) {
             check.clearConsole();
             System.out.println("Masukan NIM mahasiswa yang ingin meminjam buku");
             System.out.println("Back: ^B");
-            System.out.println("Cancel: ^C");
             System.out.print(">> ");
 
             value = input.nextLine();
 
-            var length = value.length();
-            if (value.startsWith("^") && length == 2) {
+            if (value.startsWith("^") && value.length() == 2) {
                 if (value.contains("B")) {
                     // Back to last menu
                     return;
@@ -224,6 +218,12 @@ class Book {
                     check.clearConsole(3);
                     continue;
                 }
+            }
+
+            if (!check.isNumber(value) || value.length() != 10) {
+                System.out.println("Input NIM salah, Harus berupa 10 digit angka tanpa spasi!.");
+                check.clearConsole(2);
+                continue;
             }
 
             if (!check.elementIsValid(value, list, "nim")) {
@@ -260,18 +260,20 @@ class Book {
 
             value = input.nextLine();
 
+            var isNumber = check.isNumber(value);
             if (value.isEmpty()) {
                 System.out.println("Input tidak boleh kosong!");
                 check.clearConsole(3);
                 continue;
             }
 
-            if (check.isNumber(value)) {
+            if (isNumber
+                    && Integer.parseInt(value) <= list.size()
+                    && Integer.parseInt(value) > 0) {
                 temp.add(value);
             }
 
-            var length = value.length();
-            if (value.startsWith("^") && length == 2) {
+            if (value.startsWith("^") && value.length() == 2) {
                 if (value.contains("B")) {
                     // Back to last menu
                     return;
@@ -294,22 +296,21 @@ class Book {
                 }
             }
 
-            var isNumber = check.isNumber(value);
-            if (!isNumber) {
+            if (!isNumber || Integer.parseInt(value) > list.size() || Integer.parseInt(value) <= 0) {
                 System.out.println("Buku/Pilihan tidak ditemukan.!");
+                check.clearConsole(2);
                 continue;
             }
 
             var isString = check.isString(value);
             if (isString && check.elementIsValid(value, list, "bookName")) {
-                var element = list.getAsJsonObject().get("bookName");
-                value = element.getAsString();
+                value = list.getAsJsonObject().get("bookName").getAsString();
                 jArray.add(value);
                 continue;
             }
 
             // Get JSON Element on x index
-            quantity = list
+            var quantity = list
                     .get(Integer.parseInt(value) - 1)
                     .getAsJsonObject().get("quantity")
                     .getAsInt();
@@ -332,10 +333,16 @@ class Book {
 
         // Iterate every choice and subtract the quantity value inside Database
         for (String s : temp) {
+            var quantity = list
+                    .get(Integer.parseInt(s) - 1)
+                    .getAsJsonObject().get("quantity")
+                    .getAsInt();
+
             list = check.getDatabaseList(bookpath);
             list.get(Integer.parseInt(s) - 1)
                     .getAsJsonObject()
                     .addProperty("quantity", (quantity - 1));
+
             check.writeListToFile(list, bookpath);
         }
 
@@ -367,8 +374,7 @@ class Book {
 
             var value = input.nextLine();
 
-            var length = value.length();
-            if (value.startsWith("^") && length == 2) {
+            if (value.startsWith("^") && value.length() == 2) {
                 if (value.contains("B")) {
                     // Back to last menu
                     return;
@@ -422,8 +428,7 @@ class Book {
 
             var value = input.nextLine();
 
-            var length = value.length();
-            if (value.startsWith("^") && length == 2) {
+            if (value.startsWith("^") && value.length() == 2) {
                 if (value.contains("B")) {
                     // Back to last menu
                     return;
