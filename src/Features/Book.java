@@ -196,6 +196,8 @@ class Book {
         var obj = new JsonObject();
         var jArray = new JsonArray();
         var list = check.getDatabaseList(userpath);
+        int quantity = 0;
+        String value;
         while (true) {
             check.clearConsole();
             System.out.println("Masukan NIM mahasiswa yang ingin meminjam buku");
@@ -203,8 +205,7 @@ class Book {
             System.out.println("Cancel: ^C");
             System.out.print(">> ");
 
-            String value = input.nextLine();
-            temp.add(value);
+            value = input.nextLine();
 
             var length = value.length();
             if (value.startsWith("^") && length == 2) {
@@ -250,12 +251,16 @@ class Book {
             System.out.println("Next: ^R");
             System.out.print(">> ");
 
-            var value = input.nextLine();
+            value = input.nextLine();
 
             if (value.isEmpty()) {
                 System.out.println("Input tidak boleh kosong!");
                 check.clearConsole(3);
                 continue;
+            }
+
+            if (check.isNumber(value)) {
+                temp.add(value);
             }
 
             var length = value.length();
@@ -297,7 +302,7 @@ class Book {
             }
 
             // Get JSON Element on x index
-            var quantity = list
+            quantity = list
                     .get(Integer.parseInt(value) - 1)
                     .getAsJsonObject().get("quantity")
                     .getAsInt();
@@ -308,12 +313,6 @@ class Book {
                 continue;
             }
 
-            list.get(Integer.parseInt(value) - 1)
-                    .getAsJsonObject()
-                    .addProperty("quantity", (quantity-1));
-
-            check.writeListToFile(list, bookpath);
-
             // Get JSON Property value and parse it as String
             value = list
                     .get(Integer.parseInt(value) - 1)
@@ -322,6 +321,15 @@ class Book {
 
             // Add the string into the JsonArray
             jArray.add(value);
+        }
+
+        // Iterate every choice and subtract the quantity value inside Database
+        for (String s : temp) {
+            list = check.getDatabaseList(bookpath);
+            list.get(Integer.parseInt(s) - 1)
+                    .getAsJsonObject()
+                    .addProperty("quantity", (quantity - 1));
+            check.writeListToFile(list, bookpath);
         }
 
         list = check.addObjectToList(obj, loanpath);
