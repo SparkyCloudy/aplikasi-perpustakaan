@@ -147,6 +147,10 @@ public class Checker {
         return null;
     }
 
+    /**
+     * Method to Clearing Console/Terminal
+     * Windows only for now!
+     */
     public void clearConsole() {
         try {
             new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
@@ -155,12 +159,18 @@ public class Checker {
         }
     }
 
-    public void clearConsole(double delay) {
+    /**
+     * Method to Clearing Console/Terminal with delay in a seconds
+     * Windows only for now!
+     *
+     * @param delaySeconds  Time require before clearConsole() executed.
+     */
+    public void clearConsole(double delaySeconds) {
         try {
-            delay *= 1000;
-            Thread.sleep((long)delay);
-            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-        } catch (IOException | InterruptedException e) {
+            delaySeconds *= 1000;
+            Thread.sleep((long)delaySeconds);
+            clearConsole();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
