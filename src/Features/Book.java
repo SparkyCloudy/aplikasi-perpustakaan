@@ -526,6 +526,7 @@ class Book {
                 check.clearConsole(2);
                 continue;
             }
+            temp.add(value);
             break;
         }
 
@@ -536,7 +537,7 @@ class Book {
             JsonArray jArray = new JsonArray();
             String nim = null;
             for (index = 0; index < check.getDatabaseList(loanpath).size(); index++) {
-                if (check.elementIsValid(value, check.getDatabaseList(loanpath), "nim")) {
+                if (check.elementIsValid(temp.get(0), check.getDatabaseList(loanpath), "nim")) {
                     jArray = check
                             .getDatabaseList(loanpath)
                             .get(index)
@@ -566,15 +567,15 @@ class Book {
             System.out.println("Cancel: ^C");
             System.out.print(">> ");
 
-            var value2 = input.nextLine();
+            value = input.nextLine();
 
-            if (value2.startsWith("^") && value2.length() == 2) {
-                if (value2.contains("B")) {
+            if (value.startsWith("^") && value.length() == 2) {
+                if (value.contains("B")) {
                     // Back to last menu
                     return;
                 }
 
-                if (value2.contains("C")) {
+                if (value.contains("C")) {
                     // Stop current menu and let new current menu run
                     initBookReturn();
                     return;
@@ -585,15 +586,15 @@ class Book {
                 }
             }
 
-            if (!check.isNumber(value2)
-                    || Integer.parseInt(value2) > jArray.size()
-                    || Integer.parseInt(value2) <= 0) {
+            if (!check.isNumber(value)
+                    || Integer.parseInt(value) > jArray.size()
+                    || Integer.parseInt(value) <= 0) {
                 System.out.println("Pilihan tidak ditemukan.!");
                 check.clearConsole(2);
                 continue;
             }
 
-            jArray.remove(Integer.parseInt(value2) - 1);
+            jArray.remove(Integer.parseInt(value) - 1);
 
             var list = check.getDatabaseList(loanpath);
 
@@ -609,7 +610,7 @@ class Book {
                 list = check.getDatabaseList(loanpath);
                 list.remove(index);
                 check.writeListToFile(list, loanpath);
-                check.clearConsole(3);
+                break;
             }
         }
     }
