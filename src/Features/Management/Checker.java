@@ -7,7 +7,7 @@ import java.io.*;
 public class Checker {
     // Initialize GSon with pretty printing
     //bikin object dari gson untuk memanipulasi file json
-    private Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     // Create a JsonArray
     private JsonArray userList = new JsonArray();
@@ -163,23 +163,6 @@ public class Checker {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    public void removeBookList() {
-
-    }
-
-    // Not yet finished
-    public String getJsonArrayString(String file) {
-        gson = new Gson();
-        try (var reader = new FileReader(file)) {
-            // Add list to the file
-            return gson.fromJson(reader, String.class);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }
 
