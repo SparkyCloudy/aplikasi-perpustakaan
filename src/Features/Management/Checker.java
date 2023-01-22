@@ -73,13 +73,12 @@ public class Checker {
     //buat ngecek value dari sebuah objek sama dengan yang ada di database
     public boolean elementIsValid(String search, JsonArray list, String data) {
         // Check if list empty/null
-        if (list == null) {
+        if (list == null || list.isEmpty()) {
             return false;
         }
 
         for (int i = 0; i < list.size(); i++) {
-            var element = list.get(i);
-            String value = element.getAsJsonObject().get(data).getAsString();
+            String value = list.get(i).getAsJsonObject().get(data).getAsString();
 
             // Checking if the value exist
             if (search.equalsIgnoreCase(value)) {
