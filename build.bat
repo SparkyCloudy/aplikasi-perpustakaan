@@ -2,6 +2,7 @@
 
 set build=%JAVA_HOME%\bin\javac
 set run=%JAVA_HOME%\bin\java
+mkdir out
 
 rem Compile all Java source files
 xcopy /y "src\.env" out
