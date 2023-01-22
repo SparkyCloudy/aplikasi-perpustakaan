@@ -537,7 +537,8 @@ class Book {
             JsonArray jArray = new JsonArray();
             String nim = null;
             for (index = 0; index < check.getDatabaseList(loanpath).size(); index++) {
-                if (check.elementIsValid(temp.get(0), check.getDatabaseList(loanpath), "nim")) {
+                String value2 = check.getDatabaseList(loanpath).get(index).getAsJsonObject().get("nim").getAsString();
+                if (temp.get(0).equalsIgnoreCase(value2)) {
                     jArray = check
                             .getDatabaseList(loanpath)
                             .get(index)
@@ -592,6 +593,31 @@ class Book {
                 System.out.println("Pilihan tidak ditemukan.!");
                 check.clearConsole(2);
                 continue;
+            }
+
+            String bookName = jArray
+                    .get(Integer.parseInt(value)-1)
+                    .getAsString();
+
+            for (int i = 0; i < check.getDatabaseList(bookpath).size(); i++) {
+                var bookDatabaseName = check.getDatabaseList(bookpath)
+                        .get(i)
+                        .getAsJsonObject()
+                        .get("bookName")
+                        .getAsString();
+
+                if (bookName.equalsIgnoreCase(bookDatabaseName)) {
+                    var list = check.getDatabaseList(bookpath);
+                    var quantity = list
+                            .get(i)
+                            .getAsJsonObject()
+                            .get("quantity")
+                            .getAsInt();
+
+                    list.get(i).getAsJsonObject().addProperty("quantity", quantity+1);
+                    check.writeListToFile(list, bookpath);
+                    break;
+                }
             }
 
             jArray.remove(Integer.parseInt(value) - 1);
