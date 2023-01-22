@@ -64,6 +64,8 @@ class Book {
 
         // Add input to JsonObject
         obj.addProperty("bookName", value);
+
+        // Save current value to temp
         temp.add(value);
 
         while (true) {
@@ -104,6 +106,8 @@ class Book {
 
             // Add input to JsonObject
             obj.addProperty("donorName", value);
+
+            // Save current value to temp
             temp.add(value);
 
             // Input has been added, then we stop the loop
@@ -126,7 +130,7 @@ class Book {
                 }
 
                 if (value.contains("C")) {
-                    // Stop last menu to let new menu run
+                    // Stop current menu and let new current menu run
                     initDonation();
                     return;
                 } else {
@@ -136,8 +140,7 @@ class Book {
                 }
             }
 
-            boolean isNumber = check.isNumber(value);
-            if (!isNumber) {
+            if (!check.isNumber(value)) {
                 System.out.println("Input jumlah buku salah, Harus berupa nilai angka tanpa spasi!.");
                 check.clearConsole(3);
                 continue;
@@ -145,6 +148,8 @@ class Book {
 
             // Add input to JsonObject
             obj.addProperty("quantity", Long.valueOf(value));
+
+            // Save current value to temp
             temp.add(value);
 
             // Input has been added, then we stop the loop
@@ -187,19 +192,15 @@ class Book {
         // Add TimeAdded to JsonObject
         obj.addProperty("timeAdded", formattedTimestamp);
 
-        // Add an object into a list
-        var list = check.addObjectToList(obj, bookpath);
-
-        // Write the list to the JSON file
-        check.writeListToFile(list, bookpath);
-        check.clearConsole();
+        // Add an object into a list and write the list to the JSON file
+        check.writeListToFile(check.addObjectToList(obj, bookpath), bookpath);
     }
 
     public static void initBorrow() {
+        check.clearConsole();
         temp.clear();
         var obj = new JsonObject();
         var jArray = new JsonArray();
-        var list = check.getDatabaseList(userpath);
         String value;
         while (true) {
             check.clearConsole();
@@ -226,7 +227,7 @@ class Book {
                 continue;
             }
 
-            if (!check.elementIsValid(value, list, "nim")) {
+            if (!check.elementIsValid(value, check.getDatabaseList(userpath), "nim")) {
                 System.out.println("NIM Mahasiswa tidak ditemukan, harap mendaftarkan NIM tersebut");
                 check.clearConsole(2);
                 continue;
@@ -243,13 +244,17 @@ class Book {
             break;
         }
 
-        list = check.getDatabaseList(bookpath);
         while (true) {
             check.clearConsole();
             System.out.println("List buku yang tersedia di Perpustakaan.");
-            for (int i = 0; i < list.size(); i++) {
-                var element = list.get(i);
-                var name = element.getAsJsonObject().get("bookName").getAsString();
+            for (int i = 0; i < check.getDatabaseList(bookpath).size(); i++) {
+                var name = check
+                        .getDatabaseList(bookpath)
+                        .get(i)
+                        .getAsJsonObject()
+                        .get("bookName")
+                        .getAsString();
+
                 System.out.printf("%s. %s %n", (i+1), name);
             }
             System.out.println("================");
@@ -260,16 +265,16 @@ class Book {
 
             value = input.nextLine();
 
-            var isNumber = check.isNumber(value);
             if (value.isEmpty()) {
                 System.out.println("Input tidak boleh kosong!");
                 check.clearConsole(3);
                 continue;
             }
 
-            if (isNumber
-                    && Integer.parseInt(value) <= list.size()
+            if (check.isNumber(value)
+                    && Integer.parseInt(value) <= check.getDatabaseList(bookpath).size()
                     && Integer.parseInt(value) > 0) {
+                // Save current value to temp
                 temp.add(value);
             }
 
@@ -296,21 +301,23 @@ class Book {
                 }
             }
 
-            if (!isNumber || Integer.parseInt(value) > list.size() || Integer.parseInt(value) <= 0) {
+            if (!check.isNumber(value)
+                    || Integer.parseInt(value) > check.getDatabaseList(bookpath).size()
+                    || Integer.parseInt(value) <= 0) {
                 System.out.println("Buku/Pilihan tidak ditemukan.!");
                 check.clearConsole(2);
                 continue;
             }
 
-            var isString = check.isString(value);
-            if (isString && check.elementIsValid(value, list, "bookName")) {
-                value = list.getAsJsonObject().get("bookName").getAsString();
+            if (check.isString(value) && check.elementIsValid(value, check.getDatabaseList(bookpath), "bookName")) {
+                value = check.getDatabaseList(bookpath).getAsJsonObject().get("bookName").getAsString();
                 jArray.add(value);
                 continue;
             }
 
             // Get JSON Element on x index
-            var quantity = list
+            var quantity = check
+                    .getDatabaseList(bookpath)
                     .get(Integer.parseInt(value) - 1)
                     .getAsJsonObject().get("quantity")
                     .getAsInt();
@@ -322,7 +329,8 @@ class Book {
             }
 
             // Get JSON Property value and parse it as String
-            value = list
+            value = check
+                    .getDatabaseList(bookpath)
                     .get(Integer.parseInt(value) - 1)
                     .getAsJsonObject().get("bookName")
                     .getAsString();
@@ -333,12 +341,12 @@ class Book {
 
         // Iterate every choice and subtract the quantity value inside Database
         for (String s : temp) {
-            var quantity = list
+            var quantity = check.getDatabaseList(bookpath)
                     .get(Integer.parseInt(s) - 1)
                     .getAsJsonObject().get("quantity")
                     .getAsInt();
 
-            list = check.getDatabaseList(bookpath);
+            var list = check.getDatabaseList(bookpath);
             list.get(Integer.parseInt(s) - 1)
                     .getAsJsonObject()
                     .addProperty("quantity", (quantity - 1));
@@ -346,7 +354,7 @@ class Book {
             check.writeListToFile(list, bookpath);
         }
 
-        list = check.addObjectToList(obj, loanpath);
+        var list = check.addObjectToList(obj, loanpath);
         check.writeListToFile(list, loanpath);
         check.clearConsole();
     }
@@ -354,25 +362,29 @@ class Book {
     public static void initSearch() {
         check.clearConsole();
         while (true) {
-            var list = check.getDatabaseList(loanpath);
 
-            if (list == null || list.isEmpty()) {
+            if (check.getDatabaseList(loanpath) == null || check.getDatabaseList(loanpath).isEmpty()) {
                 System.out.println("Database kosong, harap diisi terlebih dahulu menggunakan menu \"Pinjam Buku\".");
                 check.clearConsole(3);
                 break;
             }
 
             System.out.println("List Mahasiswa/i yang meminjam di Perpustakaan.");
-            for (int i = 0; i < list.size(); i++) {
-                var element = list.get(i);
-                var name = element.getAsJsonObject().get("nim").getAsString();
+            for (int i = 0; i < check.getDatabaseList(loanpath).size(); i++) {
+                var name = check
+                        .getDatabaseList(loanpath)
+                        .get(i)
+                        .getAsJsonObject()
+                        .get("nim")
+                        .getAsString();
+
                 System.out.printf("%s. %s %n", (i+1), name);
             }
             System.out.println("================");
             System.out.println("Back: ^B");
             System.out.print(">> ");
 
-            var value = input.nextLine();
+            String value = input.nextLine();
 
             if (value.startsWith("^") && value.length() == 2) {
                 if (value.contains("B")) {
@@ -385,17 +397,27 @@ class Book {
                 }
             }
 
-            var isNumber = check.isNumber(value);
-            if (!isNumber) {
+            if (!check.isNumber(value)) {
                 System.out.println("Input harus berupa angka dan tanpa spasi!.");
                 check.clearConsole(3);
                 continue;
             }
 
             check.clearConsole();
-            var element = list.get(Integer.parseInt(value) - 1);
-            var jArray = element.getAsJsonObject().get("book").getAsJsonArray();
-            var name = element.getAsJsonObject().get("nim").getAsString();
+            var jArray = check
+                    .getDatabaseList(loanpath)
+                    .get(Integer.parseInt(value) - 1)
+                    .getAsJsonObject()
+                    .get("book")
+                    .getAsJsonArray();
+
+            var name = check
+                    .getDatabaseList(loanpath)
+                    .get(Integer.parseInt(value) - 1)
+                    .getAsJsonObject()
+                    .get("nim")
+                    .getAsString();
+
             System.out.printf("List buku yang dipinjam oleh %s. %n", name);
             for (int i = 0; i < jArray.size(); i++) {
                 value = jArray.get(i).getAsString();
@@ -409,16 +431,21 @@ class Book {
         while (true) {
             var list = check.getDatabaseList(bookpath);
 
-            if (list == null) {
+            if (check.getDatabaseList(bookpath) == null) {
                 System.out.println("Database kosong, harap diisi terlebih dahulu menggunakan menu \"Donasi Buku\".");
                 check.clearConsole(3);
                 break;
             }
 
             System.out.println("List Buku yang terdaftar di Perpustakaan.");
-            for (int i = 0; i < list.size(); i++) {
-                var element = list.get(i);
-                var name = element.getAsJsonObject().get("bookName").getAsString();
+            for (int i = 0; i < check.getDatabaseList(bookpath).size(); i++) {
+                var name = check
+                        .getDatabaseList(bookpath)
+                        .get(i)
+                        .getAsJsonObject()
+                        .get("bookName")
+                        .getAsString();
+
                 System.out.printf("%s. %s %n", (i+1), name);
             }
             System.out.println("================");
@@ -426,7 +453,7 @@ class Book {
             System.out.println("Back: ^B");
             System.out.print(">> ");
 
-            var value = input.nextLine();
+            String value = input.nextLine();
 
             if (value.startsWith("^") && value.length() == 2) {
                 if (value.contains("B")) {
