@@ -77,7 +77,7 @@ public class UI {
             check.clearConsole();
             System.out.println("1. Donasi Buku");
             System.out.println("2. Pinjam Buku");
-            System.out.println("3. Cari Buku");
+            System.out.println("3. Cari Peminjam Buku");
             System.out.println("4. Remove Buku");
             System.out.println("5. Kembali");
             System.out.print("Pilihan: ");
