@@ -92,7 +92,7 @@ public class UI {
                 case 1 -> Book.initDonation();
                 case 2 -> Book.initBorrow();
                 case 3 -> Book.initSearch();
-                case 4 -> Book.initRemove();
+                case 4 -> Book.initRemoveBook();
                 case 5 -> {
                     return;
                 }

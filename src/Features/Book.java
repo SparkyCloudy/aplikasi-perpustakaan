@@ -220,7 +220,13 @@ class Book {
 
             if (!check.elementIsValid(value, list, "nim")) {
                 System.out.println("NIM Mahasiswa tidak ditemukan, harap mendaftarkan NIM tersebut");
-                check.clearConsole(3);
+                check.clearConsole(2);
+                continue;
+            }
+
+            if (check.elementIsValid(value, check.getDatabaseList(loanpath), "nim")) {
+                System.out.println("Mahasiswa sudah meminjam buku, harap dikembalikan terlebih dahulu!");
+                check.clearConsole(2);
                 continue;
             }
 
@@ -291,10 +297,28 @@ class Book {
             }
 
             // Get JSON Element on x index
-            var element = list.get(Integer.parseInt(value) - 1);
+            var quantity = list
+                    .get(Integer.parseInt(value) - 1)
+                    .getAsJsonObject().get("quantity")
+                    .getAsInt();
+
+            if (quantity == 0) {
+                System.out.println("Buku sudah habis, tidak dapat meminjam buku tersebut");
+                check.clearConsole(2);
+                continue;
+            }
+
+            list.get(Integer.parseInt(value) - 1)
+                    .getAsJsonObject()
+                    .addProperty("quantity", (quantity-1));
+
+            check.writeListToFile(list, bookpath);
 
             // Get JSON Property value and parse it as String
-            value = element.getAsJsonObject().get("bookName").getAsString();
+            value = list
+                    .get(Integer.parseInt(value) - 1)
+                    .getAsJsonObject().get("bookName")
+                    .getAsString();
 
             // Add the string into the JsonArray
             jArray.add(value);
@@ -360,7 +384,7 @@ class Book {
         }
     }
 
-    public static void initRemove() {
+    public static void initRemoveBook() {
         while (true) {
             var list = check.getDatabaseList(bookpath);
 
