@@ -1,40 +1,43 @@
+//utility yang
 package Features.Management;
 
 import com.google.gson.*;
 import java.io.*;
-import io.github.cdimascio.dotenv.*;
 
-class Checker {
+public class Checker {
     // Initialize GSon with pretty printing
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    //bikin object dari gson untuk memanipulasi file json
+    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     // Create a JsonArray
     private JsonArray userList = new JsonArray();
 
-    // JSON database location
-    static Dotenv env = Dotenv.load();
-    final static String filepath = env.get("FILEPATH");
-
-
     /**
-     * Method simplifier to add new data/object to existing JSON database
+     * Method simplifier to add new data/object to existing JSON file
      * @param object    JsonObject to be added to the list.
+     * @param file      Json File to be used store data.
      * @return          JsonArray value.
      */
-    protected JsonArray addObjectToList(JsonObject object) {
-        try {
-            var reader = new FileReader(filepath);
-
+    public JsonArray addObjectToList(JsonObject object, String file) {
+        //
+        try (var reader = new FileReader(file)){
             // Check if the file have a existing data inside
             if (reader.ready()) {
                 // If found, then read the file and put to the userList var
+                //ngerubah file dari reader ke kelas yang dituju
                 userList = gson.fromJson(reader, JsonArray.class);
+            } else {
+                // If not found, then re-instantiate the object
+                //bikin arrays baru
+                userList = new JsonArray();
             }
         } catch (IOException e) {
+            //buat ngethrow error klok ada masalah di file reader (yang ada diatas)
             e.printStackTrace();
         }
 
         // Add back
+        // sudah berupa interface (sudah berupa object) yang akan diisi method yang dituju
         userList.add(object);
 
         return userList;
@@ -43,19 +46,17 @@ class Checker {
     /**
      * Method simplifier to add JsonArray to the file
      * @param list  JsonArray to be added to the file.
+     * @param file      Json File to be used store data.
      * @noreturn
      */
-    protected void writeListToFile(JsonArray list) {
-        try {
-            // Initialize new FileWriter object
-            var file = new FileWriter(filepath);
-
+    public void writeListToFile(JsonArray list, String file) {
+        // Initialize new FileWriter object
+        try (var write = new FileWriter(file)) {
             // Add list to the file
-            gson.toJson(list, file);
+            gson.toJson(list, write);
 
             // Close the writer
-            file.flush();
-            file.close();
+            write.flush();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -69,25 +70,33 @@ class Checker {
      * @param data      Json Element we want to get
      * @return          true if data found
      */
-    protected boolean dataIsValid(String search, JsonArray list, String data) {
+    //buat ngecek value dari sebuah objek sama dengan yang ada di database
+    public boolean elementIsValid(String search, JsonArray list, String data) {
+        // Check if list empty/null
+        if (list == null) {
+            return false;
+        }
+
         for (int i = 0; i < list.size(); i++) {
             var element = list.get(i);
-            String nim = element.getAsJsonObject().get(data).getAsString();
+            String value = element.getAsJsonObject().get(data).getAsString();
 
-            if (search.equalsIgnoreCase(nim)) {
+            // Checking if the value exist
+            if (search.equalsIgnoreCase(value)) {
                 return true;
             }
         }
 
+        // Otherwise
         return false;
     }
 
     /**
      * Method to checking if input/scanner has the correct data.
      * @param str   string that will be checked by the method
-     * @return      true if data input is not digit, false otherwise
+     * @return      true if data input has value and is not digit, false otherwise
      */
-    protected boolean isString(String str) {
+    public boolean isString(String str) {
         for (char c: str.toCharArray()) {
             // If found character is an integer,
             if (Character.isDigit(c)) {
@@ -96,48 +105,64 @@ class Checker {
         }
 
         // Otherwise
-        return true;
+        return !str.isEmpty();
     }
 
     /**
      * Method to checking if input/scanner has the number (integer/float) data.
      * @param str   string that will be checked by the method
-     * @return      true if data input is a int/float without whitespace, false otherwise
+     * @return      true if data input has a int/float value without whitespace, false otherwise
      */
-    protected boolean isNumber(String str) {
+    public boolean isNumber(String str) {
         for (char c : str.toCharArray()) {
             // Stop if not digit
             if (!Character.isDigit(c)) {
                 return false;
             }
 
-            // Stop if we found whitespace on the string
-            if (Character.isWhitespace(c)) {
-                return false;
-            }
         }
 
         // Otherwise
-        return true;
+        return !str.isEmpty();
     }
 
-    protected JsonArray getUserList() {
-        try {
-            var reader = new FileReader(filepath);
-
+    /**
+     * Method to get User List from JSON File.
+     * @param file      Json File to be used store data.
+     * @return          JsonArray value.
+     */
+    public JsonArray getDatabaseList(String file) {
+        try (var reader = new FileReader(file)) {
             // Check if the file have a existing data inside
-            if (!reader.ready()) {
-                // If not found, tell user File is Empty
-                System.out.println("File is Empty");
-                return null;
+            if (reader.ready()) {
+               // Get the list
+                return userList = gson.fromJson(reader, JsonArray.class);
             }
-
-            return userList = gson.fromJson(reader, JsonArray.class);
 
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.printf("File %s is Empty %n", file);
         }
 
         return null;
     }
+
+    public void clearConsole() {
+        try {
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void clearConsole(double delay) {
+        try {
+            delay *= 1000;
+            Thread.sleep((long)delay);
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
+

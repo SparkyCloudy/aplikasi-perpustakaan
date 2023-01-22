@@ -1,0 +1,25 @@
+1.buat function untuk check kalau nomer NIM yang akan dimasukan bukan duplikat
+  (Klo bisa buat ngecek Nama dan nomer HP sekalian)
+  Hint: bisa makek cara Method Overloading. mungkin ada metode lain?
+
+2.buat cara pengecekan database buku (klo mau challenge bisa makek Json
+  sekalian ngurutin berdasarkan Tipe Buku, Nama Buku, dll yang menurut kalian
+  bagus klo malas) pakai txt
+  Hint: mungkin salah satu library pengelolaan file di java
+
+3.buat cara searching database buku yang tersedia? (klo ada mahasiswa yang
+  bertanya tentang suatu buku) entah itu berdasarkan nama (paling gampang, bisa
+  makek metode sorting biasa) atau cari element buku lainnya kyk genre, tema dll
+  (challenging, perlu Json dan itupun klo kalian implementasi No.2 makek Json)
+
+aku cuma kepikiran 3 ini dulu untuk sementara, klo ada tambahan bisa ditambahin
+
+
+
+klo kalian sempet nyelesaiin salah satu dari list diatas bisa di kasi tanda diatas
+masing-masing list, misal:
+
+=================================
+(Satria, 09/01/2023)
+3.buat cara searching dat....
+=================================

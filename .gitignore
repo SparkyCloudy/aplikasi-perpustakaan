@@ -3,6 +3,7 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 src/.env
+src/Database/users.json
 
 ### Eclipse ###
 .apt_generated
