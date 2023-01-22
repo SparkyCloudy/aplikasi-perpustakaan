@@ -78,8 +78,9 @@ public class UI {
             System.out.println("1. Donasi Buku");
             System.out.println("2. Pinjam Buku");
             System.out.println("3. Cari Peminjam Buku");
-            System.out.println("4. Remove Buku");
-            System.out.println("5. Kembali");
+            System.out.println("4. Hapus Buku");
+            System.out.println("5. Pengembalian Buku");
+            System.out.println("6. Kembali\n");
             System.out.print("Pilihan: ");
 
             String choice = input.nextLine();
@@ -93,7 +94,8 @@ public class UI {
                 case 2 -> Book.initBorrow();
                 case 3 -> Book.initSearch();
                 case 4 -> Book.initRemoveBook();
-                case 5 -> {
+                case 5 -> Book.initBookReturn();
+                case 6 -> {
                     return;
                 }
                 default -> {

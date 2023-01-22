@@ -40,7 +40,7 @@ class Book {
             check.clearConsole(3);
             initDonation();
 
-            // Stop last menu to let new menu run
+            // Stop current menu and let new current menu run
             return;
         }
 
@@ -58,7 +58,7 @@ class Book {
                 initDonation();
             }
 
-            // Stop last menu to let new menu run
+            // Stop current menu and let new current menu run
             return;
         }
 
@@ -87,7 +87,7 @@ class Book {
 
                 // Cancel Button
                 if (value.contains("C")) {
-                    // Stop last menu to let new menu run
+                    // Stop current menu and let new current menu run
                     initDonation();
                     return;
                 } else {
@@ -124,6 +124,7 @@ class Book {
             value = input.nextLine();
 
             if (value.startsWith("^") && value.length() == 2) {
+                // Back button
                 if (value.contains("B")) {
                     // Back to last menu
                     return;
@@ -291,7 +292,7 @@ class Book {
                 }
 
                 if (value.contains("C")) {
-                    // Stop last menu to let new menu run
+                    // Stop current menu and let new current menu run
                     initBorrow();
                     return;
                 } else {
@@ -397,9 +398,11 @@ class Book {
                 }
             }
 
-            if (!check.isNumber(value)) {
-                System.out.println("Input harus berupa angka dan tanpa spasi!.");
-                check.clearConsole(3);
+            if (!check.isNumber(value)
+                    || Integer.parseInt(value) > check.getDatabaseList(bookpath).size()
+                    || Integer.parseInt(value) <= 0) {
+                System.out.println("Buku/Pilihan tidak ditemukan.!");
+                check.clearConsole(2);
                 continue;
             }
 
@@ -466,9 +469,11 @@ class Book {
                 }
             }
 
-            if (!check.isNumber(value)) {
-                System.out.println("Input Pilihan salah, Harus berupa angka tanpa spasi!.");
-                check.clearConsole(3);
+            if (!check.isNumber(value)
+                    || Integer.parseInt(value) > check.getDatabaseList(bookpath).size()
+                    || Integer.parseInt(value) <= 0) {
+                System.out.println("Pilihan tidak ditemukan.!");
+                check.clearConsole(2);
                 continue;
             }
 
@@ -478,6 +483,134 @@ class Book {
             System.out.println("Buku berhasil di hapus dari Database!");
             check.clearConsole(3);
             break;
+        }
+    }
+
+    public static void initBookReturn() {
+        temp.clear();
+        check.clearConsole();
+        String value;
+
+        if (check.getDatabaseList(loanpath).isEmpty() || check.getDatabaseList(loanpath) == null) {
+            System.out.println("Database kosong, harap diisi terlebih dahulu menggunakan menu \"Pinjam Buku\".");
+            check.clearConsole(3);
+            return;
+        }
+
+        while (true) {
+            System.out.println("Masukan NIM mahasiswa yang ingin mengembalikan buku");
+            System.out.println("Back: ^B");
+            System.out.print(">> ");
+
+            value = input.nextLine();
+
+            if (value.startsWith("^") && value.length() == 2) {
+                if (value.contains("B")) {
+                    // Back to last menu
+                    return;
+                } else {
+                    System.out.println("Kombinasi tidak ditemukan!");
+                    check.clearConsole(3);
+                    continue;
+                }
+            }
+
+            if (!check.isNumber(value) || value.length() != 10) {
+                System.out.println("Input NIM salah, Harus berupa 10 digit angka tanpa spasi!.");
+                check.clearConsole(3);
+                continue;
+            }
+
+            if (!check.elementIsValid(value, check.getDatabaseList(loanpath), "nim")) {
+                System.out.println("NIM Mahasiswa tidak ditemukan!");
+                check.clearConsole(2);
+                continue;
+            }
+            break;
+        }
+
+        while (true) {
+            check.clearConsole();
+
+            int index;
+            JsonArray jArray = new JsonArray();
+            String nim = null;
+            for (index = 0; index < check.getDatabaseList(loanpath).size(); index++) {
+                if (check.elementIsValid(value, check.getDatabaseList(loanpath), "nim")) {
+                    jArray = check
+                            .getDatabaseList(loanpath)
+                            .get(index)
+                            .getAsJsonObject()
+                            .get("book")
+                            .getAsJsonArray();
+
+                    nim = check
+                            .getDatabaseList(loanpath)
+                            .get(index)
+                            .getAsJsonObject()
+                            .get("nim")
+                            .getAsString();
+                    break;
+                }
+            }
+
+            System.out.printf("List buku yang dipinjam oleh %s. %n", nim);
+            for (int x = 0; x < jArray.size(); x++) {
+                value = jArray.get(x).getAsString();
+                System.out.printf("%d. %s %n", (x+1), value);
+            }
+            System.out.println();
+            System.out.println("================");
+            System.out.println("Pilih nomer Buku yang ingin dikembalikan dari Pinjaman");
+            System.out.println("Back: ^B");
+            System.out.println("Cancel: ^C");
+            System.out.print(">> ");
+
+            var value2 = input.nextLine();
+
+            if (value2.startsWith("^") && value2.length() == 2) {
+                if (value2.contains("B")) {
+                    // Back to last menu
+                    return;
+                }
+
+                if (value2.contains("C")) {
+                    // Stop current menu and let new current menu run
+                    initBookReturn();
+                    return;
+                } else {
+                    System.out.println("Kombinasi tidak ditemukan!");
+                    check.clearConsole(3);
+                    break;
+                }
+            }
+
+            if (!check.isNumber(value2)
+                    || Integer.parseInt(value2) > jArray.size()
+                    || Integer.parseInt(value2) <= 0) {
+                System.out.println("Pilihan tidak ditemukan.!");
+                check.clearConsole(2);
+                continue;
+            }
+
+            jArray.remove(Integer.parseInt(value2) - 1);
+
+            var list = check.getDatabaseList(loanpath);
+
+            list.get(index).getAsJsonObject().add("book", jArray);
+            check.writeListToFile(list, loanpath);
+
+            if (check.getDatabaseList(loanpath)
+                    .get(index)
+                    .getAsJsonObject()
+                    .get("book")
+                    .getAsJsonArray()
+                    .size() == 0) {
+                list = check.getDatabaseList(loanpath);
+                list.remove(index);
+                check.writeListToFile(list, loanpath);
+                check.clearConsole(3);
+            }
         }
     }
 }
