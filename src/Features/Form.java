@@ -33,8 +33,7 @@ class Form {
             String value = input.nextLine();
 
             // Check if the input is correct
-            var length = value.length();
-            if (value.startsWith("^") && length == 2) {
+            if (value.startsWith("^") && value.length() == 2) {
                 if (value.contains("B")) {
                     // Back to last menu
                     return;
@@ -52,8 +51,7 @@ class Form {
                 }
             }
 
-            var isString = check.isString(value);
-            if (!isString) {
+            if (!check.isString(value)) {
                 // Tell user if their input incorrect
                 System.out.println("Input nama salah, Harus berupa huruf!.");
                 check.clearConsole(3);
@@ -78,8 +76,7 @@ class Form {
             // Initialize Variables
             String value = input.nextLine();
 
-            var length = value.length();
-            if (value.startsWith("^") && length == 2) {
+            if (value.startsWith("^") && value.length() == 2) {
                 if (value.contains("B")) {
                     // Back to last menu
                     return;
@@ -97,8 +94,7 @@ class Form {
                 }
             }
 
-            var isNumber = check.isNumber(value);
-            if (!isNumber) {
+            if (!check.isNumber(value)) {
                 // Tell user if their input incorrect
                 System.out.println("Input Nomer Telpon salah, Harus berupa angka tanpa spasi!.");
                 check.clearConsole(3);
@@ -124,8 +120,7 @@ class Form {
             String value = input.nextLine();
 
             // Check if the input is correct
-            var length = value.length();
-            if (value.startsWith("^") && length == 2) {
+            if (value.startsWith("^") && value.length() == 2) {
                 if (value.contains("B")) {
                     // Back to last menu
                     return;
@@ -142,8 +137,7 @@ class Form {
                 }
             }
 
-            var isNumber = check.isNumber(value);
-            if (!isNumber || length != 10) {
+            if (!check.isNumber(value) || value.length() != 10) {
                 // Tell user if their input incorrect
                 System.out.println("Input NIM salah, Harus berupa 10 digit angka tanpa spasi!.");
                 check.clearConsole(3);
@@ -163,11 +157,8 @@ class Form {
             break;
         }
 
-        // Add an object into a list
-        var list = check.addObjectToList(obj, userpath);
-
-        // Write the list to the JSON file
-        check.writeListToFile(list, userpath);
+        // Add an object into a list and Write the list to the JSON file
+        check.writeListToFile(check.addObjectToList(obj, userpath), userpath);
     }
 
     public static void initChecker() {
@@ -177,14 +168,10 @@ class Form {
             System.out.println("Back: ^B");
             System.out.print(">> ");
 
-            var value = input.nextLine();
+            String value = input.nextLine();
 
             // Check if the input is correct
-            var list = check.getDatabaseList(userpath);
-            var length = value.length();
-            var isNumber = check.isNumber(value);
-            var isString = check.isString(value);
-            if (value.startsWith("^") && length == 2) {
+            if (value.startsWith("^") && value.length() == 2) {
                 if (value.contains("B")) {
                     // Back to last menu
                     return;
@@ -196,25 +183,25 @@ class Form {
             }
 
             // Check what JSON Element what we want to check
-            if (isNumber && length == 10) {
+            if (check.isNumber(value) && value.length() == 10) {
                 // Check if user input exist on JSON file
-                if (!check.elementIsValid(value, list, "nim")) {
+                if (!check.elementIsValid(value, check.getDatabaseList(userpath), "nim")) {
                     System.out.println("Not Found!");
                     check.clearConsole(1);
                     continue;
                 }
                 System.out.println("NIM Found!");
                 check.clearConsole(1);
-            } else if (isNumber) {
-                if (!check.elementIsValid(value, list, "phone")) {
+            } else if (check.isNumber(value)) {
+                if (!check.elementIsValid(value, check.getDatabaseList(userpath), "phone")) {
                     System.out.println("Not Found!");
                     check.clearConsole(1);
                     continue;
                 }
                 System.out.println("Phone Found!");
                 check.clearConsole(1);
-            } else if (isString) {
-                if (!check.elementIsValid(value, list, "name")) {
+            } else if (check.isString(value)) {
+                if (!check.elementIsValid(value, check.getDatabaseList(userpath), "name")) {
                     System.out.println("Not Found!");
                     check.clearConsole(1);
                     continue;
@@ -231,18 +218,21 @@ class Form {
 
     public static void initRemove() {
         while (true) {
-            var list = check.getDatabaseList(userpath);
 
-            if (list == null || list.isEmpty()) {
-                System.out.println("Database kosong, harap diisi terlebih dahulu menggunakan menu \"Donasi Buku\".");
+            if (check.getDatabaseList(userpath) == null || check.getDatabaseList(userpath).isEmpty()) {
+                System.out.println("Database user kosong, harap diisi terlebih dahulu menggunakan menu \"Register Mahasiswa\".");
                 check.clearConsole(3);
                 break;
             }
 
             System.out.println("List Mahasiswa/i yang terdaftar di Perpustakaan.");
-            for (int i = 0; i < list.size(); i++) {
-                var element = list.get(i);
-                var name = element.getAsJsonObject().get("name").getAsString();
+            for (int i = 0; i < check.getDatabaseList(userpath).size(); i++) {
+                var name = check
+                        .getDatabaseList(userpath)
+                        .get(i).getAsJsonObject()
+                        .get("name")
+                        .getAsString();
+
                 System.out.printf("%s. %s %n", (i+1), name);
             }
             System.out.println("================");
@@ -250,10 +240,9 @@ class Form {
             System.out.println("Back: ^B");
             System.out.print(">> ");
 
-            var value = input.nextLine();
+            String value = input.nextLine();
 
-            var length = value.length();
-            if (value.startsWith("^") && length == 2) {
+            if (value.startsWith("^") && value.length() == 2) {
                 if (value.contains("B")) {
                     // Back to last menu
                     return;
@@ -270,6 +259,7 @@ class Form {
                 continue;
             }
 
+            var list = check.getDatabaseList(userpath);
             list.remove(Integer.parseInt(value) - 1);
 
             check.writeListToFile(list, userpath);
