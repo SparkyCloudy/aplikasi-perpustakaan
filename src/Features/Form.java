@@ -150,6 +150,12 @@ class Form {
                 continue;
             }
 
+            if (check.elementIsValid(value, check.getDatabaseList(userpath), "nim")) {
+                System.out.println("Mahasiswa sudah Terdaftar di Database!");
+                check.clearConsole(2);
+                continue;
+            }
+
             // Add input to JsonObject
             obj.addProperty("nim", Long.valueOf(value));
 
