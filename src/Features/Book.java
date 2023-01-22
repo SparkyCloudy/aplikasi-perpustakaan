@@ -334,7 +334,7 @@ class Book {
         while (true) {
             var list = check.getDatabaseList(loanpath);
 
-            if (list == null) {
+            if (list == null || list.isEmpty()) {
                 System.out.println("Database kosong, harap diisi terlebih dahulu menggunakan menu \"Donasi Buku\".");
                 check.clearConsole(3);
                 break;
