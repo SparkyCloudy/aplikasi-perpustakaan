@@ -46,7 +46,8 @@ public class UI {
             check.clearConsole();
             System.out.println("1. Register Mahasiswa");
             System.out.println("2. Check Data Mahasiswa");
-            System.out.println("3. Kembali");
+            System.out.println("3. Remove Data Mahasiswa");
+            System.out.println("4. Kembali");
             System.out.print("Pilihan: ");
 
             String choice = input.nextLine();
@@ -59,7 +60,8 @@ public class UI {
             switch (Integer.parseInt(choice)) {
                 case 1 -> Form.initRegister();
                 case 2 -> Form.initChecker();
-                case 3 -> {
+                case 3 -> Form.initRemove();
+                case 4 -> {
                     return;
                 }
                 default -> {
@@ -76,7 +78,8 @@ public class UI {
             System.out.println("1. Donasi Buku");
             System.out.println("2. Pinjam Buku");
             System.out.println("3. Cari Buku");
-            System.out.println("4. Kembali");
+            System.out.println("4. Remove Buku");
+            System.out.println("5. Kembali");
             System.out.print("Pilihan: ");
 
             String choice = input.nextLine();
@@ -89,7 +92,8 @@ public class UI {
                 case 1 -> Book.initDonation();
                 case 2 -> Book.initBorrow();
                 case 3 -> Book.initSearch();
-                case 4 -> {
+                case 4 -> Book.initRemove();
+                case 5 -> {
                     return;
                 }
                 default -> {

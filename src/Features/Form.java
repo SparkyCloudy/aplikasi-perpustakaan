@@ -222,4 +222,54 @@ class Form {
             }
         }
     }
+
+    public static void initRemove() {
+        while (true) {
+            var list = check.getDatabaseList(userpath);
+
+            if (list == null) {
+                System.out.println("Database kosong, harap diisi terlebih dahulu menggunakan menu \"Donasi Buku\".");
+                check.clearConsole(3);
+                break;
+            }
+
+            System.out.println("List Mahasiswa/i yang terdaftar di Perpustakaan.");
+            for (int i = 0; i < list.size(); i++) {
+                var element = list.get(i);
+                var name = element.getAsJsonObject().get("name").getAsString();
+                System.out.printf("%s. %s %n", (i+1), name);
+            }
+            System.out.println("================");
+            System.out.println("Pilih Nomer Mahasiswa yang ingin dihapus dari Database");
+            System.out.println("Back: ^B");
+            System.out.print(">> ");
+
+            var value = input.nextLine();
+
+            var length = value.length();
+            if (value.startsWith("^") && length == 2) {
+                if (value.contains("B")) {
+                    // Back to last menu
+                    return;
+                } else {
+                    System.out.println("Kombinasi tidak ditemukan!");
+                    check.clearConsole(3);
+                    continue;
+                }
+            }
+
+            if (!check.isNumber(value)) {
+                System.out.println("Input Pilihan salah, Harus berupa angka tanpa spasi!.");
+                check.clearConsole(3);
+                continue;
+            }
+
+            list.remove(Integer.parseInt(value) - 1);
+
+            check.writeListToFile(list, userpath);
+            System.out.println("Mahasiswa/i berhasil di hapus dari Database!");
+            check.clearConsole(3);
+            break;
+        }
+    }
 }

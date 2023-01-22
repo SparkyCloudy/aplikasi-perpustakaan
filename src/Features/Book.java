@@ -8,16 +8,8 @@ import io.github.cdimascio.dotenv.Dotenv;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Scanner;
-
-class BookDatabase {
-    String bookName;
-    String donorName;
-    int quantity;
-    String timeAdded;
-}
 
 class Book {
     static Scanner input = new Scanner(System.in);
@@ -219,12 +211,6 @@ class Book {
                 if (value.contains("B")) {
                     // Back to last menu
                     return;
-                }
-
-                if (value.contains("C")) {
-                    // Stop last menu to let new menu run
-                    initBorrow();
-                    return;
                 } else {
                     System.out.println("Kombinasi tidak ditemukan!");
                     check.clearConsole(3);
@@ -371,6 +357,56 @@ class Book {
                 System.out.printf("%d. %s %n%n", (i+1), value);
             }
             System.out.println();
+        }
+    }
+
+    public static void initRemove() {
+        while (true) {
+            var list = check.getDatabaseList(bookpath);
+
+            if (list == null) {
+                System.out.println("Database kosong, harap diisi terlebih dahulu menggunakan menu \"Donasi Buku\".");
+                check.clearConsole(3);
+                break;
+            }
+
+            System.out.println("List Buku yang terdaftar di Perpustakaan.");
+            for (int i = 0; i < list.size(); i++) {
+                var element = list.get(i);
+                var name = element.getAsJsonObject().get("bookName").getAsString();
+                System.out.printf("%s. %s %n", (i+1), name);
+            }
+            System.out.println("================");
+            System.out.println("Pilih nomer Buku yang ingin dihapus dari Database");
+            System.out.println("Back: ^B");
+            System.out.print(">> ");
+
+            var value = input.nextLine();
+
+            var length = value.length();
+            if (value.startsWith("^") && length == 2) {
+                if (value.contains("B")) {
+                    // Back to last menu
+                    return;
+                } else {
+                    System.out.println("Kombinasi tidak ditemukan!");
+                    check.clearConsole(3);
+                    continue;
+                }
+            }
+
+            if (!check.isNumber(value)) {
+                System.out.println("Input Pilihan salah, Harus berupa angka tanpa spasi!.");
+                check.clearConsole(3);
+                continue;
+            }
+
+            list.remove(Integer.parseInt(value) - 1);
+
+            check.writeListToFile(list, bookpath);
+            System.out.println("Buku berhasil di hapus dari Database!");
+            check.clearConsole(3);
+            break;
         }
     }
 }
