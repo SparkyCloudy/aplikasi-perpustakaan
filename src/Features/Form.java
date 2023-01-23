@@ -24,9 +24,17 @@ class Form {
         // Keep repeat until the input correct
         while (true) {
             check.clearConsole();
-            System.out.println("Masukan Nama Lengkap dari Mahasiswa/i.");
-            System.out.println("Back: ^B");
-            System.out.println("Cancel: ^C");
+            System.out.println("+__________________________________________________________+");
+            System.out.println("|               |  APLIKASI PERPUSTAKAAN  |                |");
+            System.out.println("|               |_________________________|                |");
+            System.out.println("|                    Register Mahasiswa                    |");
+            System.out.println("|                                                          |");
+            System.out.println("|  Masukan Nama Lengkap dari Mahasiswa/i.                  |");
+            System.out.println("|  ___                                                     |");
+            System.out.println("| |^B | Back                                               |");
+            System.out.println("| |^C | Cancel                                             |");
+            System.out.println("| |___|                                                    |");
+            System.out.println("+__________________________________________________________+");
             System.out.print(">> ");
 
             // Initialize Variables
@@ -68,9 +76,17 @@ class Form {
         // Keep repeat until the input correct
         while (true) {
             check.clearConsole();
-            System.out.println("Masukan Nomer Telpon dari Mahasiswa/i.");
-            System.out.println("Back: ^B");
-            System.out.println("Cancel: ^C");
+            System.out.println("+__________________________________________________________+");
+            System.out.println("|               |  APLIKASI PERPUSTAKAAN  |                |");
+            System.out.println("|               |_________________________|                |");
+            System.out.println("|                    Register Mahasiswa                    |");
+            System.out.println("|                                                          |");
+            System.out.println("|  Masukan Nomer Telpon dari Mahasiswa/i.                  |");
+            System.out.println("|  ___                                                     |");
+            System.out.println("| |^B | Back                                               |");
+            System.out.println("| |^C | Cancel                                             |");
+            System.out.println("| |___|                                                    |");
+            System.out.println("+__________________________________________________________+");
             System.out.print(">> ");
 
             // Initialize Variables
@@ -111,9 +127,17 @@ class Form {
         // Keep repeat until the input correct
         while (true) {
             check.clearConsole();
-            System.out.println("Masukan NIM dari Mahasiswa/i.");
-            System.out.println("Back: ^B");
-            System.out.println("Cancel: ^C");
+            System.out.println("+__________________________________________________________+");
+            System.out.println("|               |  APLIKASI PERPUSTAKAAN  |                |");
+            System.out.println("|               |_________________________|                |");
+            System.out.println("|                    Register Mahasiswa                    |");
+            System.out.println("|                                                          |");
+            System.out.println("|  Masukan NIM dari Mahasiswa/i.                           |");
+            System.out.println("|  ___                                                     |");
+            System.out.println("| |^B | Back                                               |");
+            System.out.println("| |^C | Cancel                                             |");
+            System.out.println("| |___|                                                    |");
+            System.out.println("+__________________________________________________________+");
             System.out.print(">> ");
 
             // Initialize Variables
@@ -164,8 +188,16 @@ class Form {
     public static void initChecker() {
         while (true) {
             check.clearConsole();
-            System.out.println("Masukan data dari Mahasiswa/i yang ingin dicari.");
-            System.out.println("Back: ^B");
+            System.out.println("+__________________________________________________________+");
+            System.out.println("|               |  APLIKASI PERPUSTAKAAN  |                |");
+            System.out.println("|               |_________________________|                |");
+            System.out.println("|                   Check Data Mahasiswa                   |");
+            System.out.println("|                                                          |");
+            System.out.println("|  Masukan data dari Mahasiswa/i yang ingin dicari.        |");
+            System.out.println("|  ___                                                     |");
+            System.out.println("| |^B | Back                                               |");
+            System.out.println("| |___|                                                    |");
+            System.out.println("+__________________________________________________________+");
             System.out.print(">> ");
 
             String value = input.nextLine();
@@ -225,7 +257,13 @@ class Form {
                 break;
             }
 
-            System.out.println("List Mahasiswa/i yang terdaftar di Perpustakaan.");
+            System.out.println("+__________________________________________________________+");
+            System.out.println("|               |  APLIKASI PERPUSTAKAAN  |                |");
+            System.out.println("|               |_________________________|                |");
+            System.out.println("|                  Remove Data Mahasiswa                   |");
+            System.out.println("|                                                          |");
+            System.out.println("|  List Mahasiswa/i yang terdaftar di Perpustakaan.        |");
+            System.out.println("|                                                          |");
             for (int i = 0; i < check.getDatabaseList(userpath).size(); i++) {
                 var name = check
                         .getDatabaseList(userpath)
@@ -233,11 +271,14 @@ class Form {
                         .get("name")
                         .getAsString();
 
-                System.out.printf("%s. %s %n", (i+1), name);
+                System.out.printf("| %s. %s %n", (i+1), name);
             }
-            System.out.println("================");
-            System.out.println("Pilih Nomer Mahasiswa yang ingin dihapus dari Database");
-            System.out.println("Back: ^B");
+            System.out.println("|  ____________________________________________________    |");
+            System.out.println("| Pilih Nomer Mahasiswa yang ingin dihapus dari Database   |");
+            System.out.println("|  ___                                                     |");
+            System.out.println("| |^B | Back                                               |");
+            System.out.println("| |___|                                                    |");
+            System.out.println("+__________________________________________________________+");
             System.out.print(">> ");
 
             String value = input.nextLine();

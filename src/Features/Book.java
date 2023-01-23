@@ -27,9 +27,17 @@ class Book {
         var obj = new JsonObject();
         temp.clear();
 
-        System.out.println("Masukan Nama Buku yang di donasikan.");
-        System.out.println("Back: ^B");
-        System.out.println("Cancel: ^C");
+        System.out.println("+__________________________________________________________+");
+        System.out.println("|               |  APLIKASI PERPUSTAKAAN  |                |");
+        System.out.println("|               |_________________________|                |");
+        System.out.println("|                      Donasi Buku                         |");
+        System.out.println("|                                                          |");
+        System.out.println("|  Masukan Nama Buku yang di donasikan.                    |");
+        System.out.println("|  ___                                                     |");
+        System.out.println("| |^B | Back                                               |");
+        System.out.println("| |^C | Cancel                                             |");
+        System.out.println("| |___|                                                    |");
+        System.out.println("+__________________________________________________________+");
         System.out.print(">> ");
 
         String value = input.nextLine();
@@ -70,9 +78,17 @@ class Book {
 
         while (true) {
             check.clearConsole();
-            System.out.printf("Masukan Nama donatur buku %s. %n", temp.get(0));
-            System.out.println("Back: ^B");
-            System.out.println("Cancel: ^C");
+            System.out.println("+__________________________________________________________+");
+            System.out.println("|               |  APLIKASI PERPUSTAKAAN  |                |");
+            System.out.println("|               |_________________________|                |");
+            System.out.println("|                      Donasi Buku                         |");
+            System.out.println("|                                                          |");
+            System.out.printf("| Masukan Nama donatur buku %s. %n", temp.get(0));
+            System.out.println("|  ___                                                     |");
+            System.out.println("| |^B | Back                                               |");
+            System.out.println("| |^C | Cancel                                             |");
+            System.out.println("| |___|                                                    |");
+            System.out.println("+__________________________________________________________+");
             System.out.print(">> ");
 
             value = input.nextLine();
@@ -116,9 +132,17 @@ class Book {
 
         while (true) {
             check.clearConsole();
-            System.out.printf("Masukan Jumlah buku \"%s\" yang didonasikan. %n", temp.get(0));
-            System.out.println("Back: ^B");
-            System.out.println("Cancel: ^C");
+            System.out.println("+__________________________________________________________+");
+            System.out.println("|               |  APLIKASI PERPUSTAKAAN  |                |");
+            System.out.println("|               |_________________________|                |");
+            System.out.println("|                      Donasi Buku                         |");
+            System.out.println("|                                                          |");
+            System.out.printf("| Masukan Jumlah buku \"%s\" yang didonasikan. %n", temp.get(0));
+            System.out.println("|  ___                                                     |");
+            System.out.println("| |^B | Back                                               |");
+            System.out.println("| |^C | Cancel                                             |");
+            System.out.println("| |___|                                                    |");
+            System.out.println("+__________________________________________________________+");
             System.out.print(">> ");
 
             value = input.nextLine();
@@ -160,10 +184,20 @@ class Book {
         // Confirmation prompt
         while (true) {
             check.clearConsole();
-            System.out.println("[KONFIRMASI] Apakah detail buku dibawah sudah tepat?");
-            System.out.println("Nama Buku\t : " + temp.get(0));
-            System.out.println("Nama Donatur\t : " + temp.get(1));
-            System.out.println("Jumlah Buku\t : " + temp.get(2));
+            System.out.println("+__________________________________________________________+");
+            System.out.println("|               |  APLIKASI PERPUSTAKAAN  |                |");
+            System.out.println("|               |_________________________|                |");
+            System.out.println("|                      Donasi Buku                         |");
+            System.out.println("|                                                          |");
+            System.out.println("| [KONFIRMASI] Apakah detail buku dibawah sudah tepat?");
+            System.out.println("| Nama Buku\t : " + temp.get(0));
+            System.out.println("| Nama Donatur\t : " + temp.get(1));
+            System.out.println("| Jumlah Buku\t : " + temp.get(2));
+            System.out.println("|  ___                                                     |");
+            System.out.println("| | Y | Yes                                                |");
+            System.out.println("| | N | No                                                 |");
+            System.out.println("| |___|                                                    |");
+            System.out.println("+__________________________________________________________+");
             System.out.print("Pilihan [Y/n]: ");
 
             value = input.nextLine();
@@ -205,8 +239,16 @@ class Book {
         String value;
         while (true) {
             check.clearConsole();
-            System.out.println("Masukan NIM mahasiswa yang ingin meminjam buku");
-            System.out.println("Back: ^B");
+            System.out.println("+__________________________________________________________+");
+            System.out.println("|               |  APLIKASI PERPUSTAKAAN  |                |");
+            System.out.println("|               |_________________________|                |");
+            System.out.println("|                      Pinjam Buku                         |");
+            System.out.println("|                                                          |");
+            System.out.println("|  Masukan NIM mahasiswa yang ingin meminjam buku          |");
+            System.out.println("|  ___                                                     |");
+            System.out.println("| |^B | Back                                               |");
+            System.out.println("| |___|                                                    |");
+            System.out.println("+__________________________________________________________+");
             System.out.print(">> ");
 
             value = input.nextLine();
@@ -247,7 +289,13 @@ class Book {
 
         while (true) {
             check.clearConsole();
-            System.out.println("List buku yang tersedia di Perpustakaan.");
+            System.out.println("+__________________________________________________________+");
+            System.out.println("|               |  APLIKASI PERPUSTAKAAN  |                |");
+            System.out.println("|               |_________________________|                |");
+            System.out.println("|                      Pinjam Buku                         |");
+            System.out.println("|                                                          |");
+            System.out.println("|  List buku yang tersedia di Perpustakaan.                |");
+            System.out.println("|                                                          |");
             for (int i = 0; i < check.getDatabaseList(bookpath).size(); i++) {
                 var name = check
                         .getDatabaseList(bookpath)
@@ -256,12 +304,17 @@ class Book {
                         .get("bookName")
                         .getAsString();
 
-                System.out.printf("%s. %s %n", (i+1), name);
+                System.out.printf("|%s. %s %n", (i+1), name);
             }
-            System.out.println("================");
-            System.out.println("Back: ^B");
-            System.out.println("Cancel: ^C");
-            System.out.println("Next: ^R");
+            System.out.println("|  ____________________________________________________    |");
+            System.out.println("|  ___                                                     |");
+            System.out.println("| |^B | Back                                               |");
+            System.out.println("| |^C | Cancel                                             |");
+            System.out.println("| |^R | Next                                               |");
+            System.out.println("| |___|                                                    |");
+            System.out.println("|                                                          |");
+            System.out.println("|   Note : Setelah Memilih Buku Harap untuk Next           |");
+            System.out.println("+__________________________________________________________+");
             System.out.print(">> ");
 
             value = input.nextLine();
@@ -370,7 +423,13 @@ class Book {
                 break;
             }
 
-            System.out.println("List Mahasiswa/i yang meminjam di Perpustakaan.");
+            System.out.println("+__________________________________________________________+");
+            System.out.println("|               |  APLIKASI PERPUSTAKAAN  |                |");
+            System.out.println("|               |_________________________|                |");
+            System.out.println("|                   Cari Pemimjam Buku                     |");
+            System.out.println("|                                                          |");
+            System.out.println("|  List Mahasiswa/i yang meminjam di Perpustakaan.         |");
+            System.out.println("|                                                          |");
             for (int i = 0; i < check.getDatabaseList(loanpath).size(); i++) {
                 var name = check
                         .getDatabaseList(loanpath)
@@ -379,10 +438,13 @@ class Book {
                         .get("nim")
                         .getAsString();
 
-                System.out.printf("%s. %s %n", (i+1), name);
+                System.out.printf("|%s. %s %n", (i+1), name);
             }
-            System.out.println("================");
-            System.out.println("Back: ^B");
+            System.out.println("|  ____________________________________________________    |");
+            System.out.println("|  ___                                                     |");
+            System.out.println("| |^B | Back                                               |");
+            System.out.println("| |___|                                                    |");
+            System.out.println("+__________________________________________________________+");
             System.out.print(">> ");
 
             String value = input.nextLine();
@@ -421,12 +483,16 @@ class Book {
                     .get("nim")
                     .getAsString();
 
-            System.out.printf("List buku yang dipinjam oleh %s. %n", name);
+            check.clearConsole();
+            System.out.println("+__________________________________________________________+");
+            System.out.printf("| List buku yang dipinjam oleh %s. %n", name);
+            System.out.println("|                                                          |");
             for (int i = 0; i < jArray.size(); i++) {
                 value = jArray.get(i).getAsString();
-                System.out.printf("%d. %s %n", (i+1), value);
+                System.out.printf("|%d. %s %n", (i+1), value);
             }
-            System.out.println();
+            System.out.println("+__________________________________________________________+");
+
         }
     }
 
@@ -440,7 +506,13 @@ class Book {
                 break;
             }
 
-            System.out.println("List Buku yang terdaftar di Perpustakaan.");
+            System.out.println("+__________________________________________________________+");
+            System.out.println("|               |  APLIKASI PERPUSTAKAAN  |                |");
+            System.out.println("|               |_________________________|                |");
+            System.out.println("|                       Hapus Buku                         |");
+            System.out.println("|                                                          |");
+            System.out.println("|  List Buku yang terdaftar di Perpustakaan.               |");
+            System.out.println("|                                                          |");
             for (int i = 0; i < check.getDatabaseList(bookpath).size(); i++) {
                 var name = check
                         .getDatabaseList(bookpath)
@@ -449,12 +521,16 @@ class Book {
                         .get("bookName")
                         .getAsString();
 
-                System.out.printf("%s. %s %n", (i+1), name);
+                System.out.printf("|%s. %s %n", (i+1), name);
             }
-            System.out.println("================");
-            System.out.println("Pilih nomer Buku yang ingin dihapus dari Database");
-            System.out.println("Back: ^B");
+            System.out.println("|  ____________________________________________________    |");
+            System.out.println("|  Pilih nomer Buku yang ingin dihapus dari Database       |");
+            System.out.println("|  ___                                                     |");
+            System.out.println("| |^B | Back                                               |");
+            System.out.println("| |___|                                                    |");
+            System.out.println("+__________________________________________________________+");
             System.out.print(">> ");
+
 
             String value = input.nextLine();
 
@@ -498,8 +574,16 @@ class Book {
         }
 
         while (true) {
-            System.out.println("Masukan NIM mahasiswa yang ingin mengembalikan buku");
-            System.out.println("Back: ^B");
+            System.out.println("+__________________________________________________________+");
+            System.out.println("|               |  APLIKASI PERPUSTAKAAN  |                |");
+            System.out.println("|               |_________________________|                |");
+            System.out.println("|                   Pengembalian Buku                      |");
+            System.out.println("|                                                          |");
+            System.out.println("| Masukan NIM mahasiswa yang ingin mengembalikan buku      |");
+            System.out.println("|  ___                                                     |");
+            System.out.println("| |^B | Back                                               |");
+            System.out.println("| |___|                                                    |");
+            System.out.println("+__________________________________________________________+");
             System.out.print(">> ");
 
             value = input.nextLine();
@@ -556,16 +640,24 @@ class Book {
                 }
             }
 
-            System.out.printf("List buku yang dipinjam oleh %s. %n", nim);
+            System.out.println("+__________________________________________________________+");
+            System.out.println("|               |  APLIKASI PERPUSTAKAAN  |                |");
+            System.out.println("|               |_________________________|                |");
+            System.out.println("|                   Pengembalian Buku                      |");
+            System.out.println("|                                                          |");
+            System.out.printf("|  List buku yang dipinjam oleh %s. %n", nim);
+            System.out.println("|                                                          |");
             for (int x = 0; x < jArray.size(); x++) {
                 value = jArray.get(x).getAsString();
-                System.out.printf("%d. %s %n", (x+1), value);
+                System.out.printf("|%d. %s %n", (x+1), value);
             }
-            System.out.println();
-            System.out.println("================");
-            System.out.println("Pilih nomer Buku yang ingin dikembalikan dari Pinjaman");
-            System.out.println("Back: ^B");
-            System.out.println("Cancel: ^C");
+            System.out.println("|  ____________________________________________________    |");
+            System.out.println("| Pilih nomer Buku yang ingin dikembalikan dari Pinjaman   |");
+            System.out.println("|  ___                                                     |");
+            System.out.println("| |^B | Back                                               |");
+            System.out.println("| |^C | Cancel                                             |");
+            System.out.println("| |___|                                                    |");
+            System.out.println("+__________________________________________________________+");
             System.out.print(">> ");
 
             value = input.nextLine();
