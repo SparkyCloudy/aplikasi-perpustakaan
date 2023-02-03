@@ -1,5 +1,8 @@
 import Features.*;
 import io.github.cdimascio.dotenv.Dotenv;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class Main {
     // Environment Variables
@@ -10,10 +13,23 @@ public class Main {
 
     public static void main(String[] args) {
         var program = new Main();
-        if (bookpath != null && userpath != null && loanpath != null) {
+        var fileExist = new File("src/.env");
+
+        if (!fileExist.exists()) {
+            System.out.println("Environtment file not found, please read \".env.example\" file!");
+            return;
+        }
+
+        try (var file = new FileReader("src/.env")) {
+            if (bookpath == null || userpath == null || loanpath == null && file.ready()) {
+                System.out.println("Environtment variables for Database not ready, please read \".env.example\" file!");
+                return;
+            }
+
             program.initModule();
-        } else {
-            System.out.println("Environtment variables for Database not ready, please read \".env.example\" file!");
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }
