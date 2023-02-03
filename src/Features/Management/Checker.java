@@ -148,11 +148,18 @@ public class Checker {
 
     /**
      * Method to Clearing Console/Terminal
-     * Windows only for now!
      */
     public void clearConsole() {
         try {
-            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            var osName = System.getProperty("os.name").toLowerCase();
+            if (osName.contains("linux")) {
+                new ProcessBuilder("clear").inheritIO().start().waitFor();
+            }
+
+            if (osName.contains("windows")) {
+                new ProcessBuilder("cmd", "clear", "cls").inheritIO().start().waitFor();
+            }
+
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
@@ -160,7 +167,6 @@ public class Checker {
 
     /**
      * Method to Clearing Console/Terminal with delay in a seconds
-     * Windows only for now!
      *
      * @param delaySeconds  Time require before clearConsole() executed.
      */
